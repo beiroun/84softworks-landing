@@ -1,0 +1,7 @@
+/**
+ * Global stylesheet entry point.
+ * Token-driven: tokens first, then the base layer. Component layers get
+ * added under ./styles as the landing grows.
+ */
+@import './styles/tokens.css';
+@import './styles/base.css';
