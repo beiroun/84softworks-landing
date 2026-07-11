@@ -1,4 +1,4 @@
-/** Reset, page shell and the typographic scale. */
+/** Reset, page shell and typographic baseline. Weight 400 everywhere (brand invariant). */
 
 * {
   box-sizing: border-box;
@@ -7,41 +7,29 @@
   font-family: var(--font);
 }
 
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
 body {
   background-color: var(--canvas);
   color: var(--ink);
   font-size: var(--text-body);
-  line-height: 1.43;
-  -webkit-font-smoothing: antialiased;
-  /* Engage Inter's optical-size axis (opsz), loaded via the variable font */
-  font-optical-sizing: auto;
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking);
+  line-height: 1.5;
+  overflow-x: hidden;
 }
 
-.container {
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  padding: var(--sp-24);
+img {
+  display: block;
+  max-width: 100%;
 }
 
-.centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: var(--text-heading);
-  font-weight: var(--fw-semibold);
-  letter-spacing: -0.75px;
-  line-height: 1.2;
-  color: var(--ink);
-}
-
-h2 {
-  font-size: var(--text-heading-sm);
-  font-weight: var(--fw-semibold);
-  letter-spacing: -0.6px;
-  line-height: 1.33;
-  color: var(--ink);
+a {
+  color: inherit;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }

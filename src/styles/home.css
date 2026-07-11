@@ -1,0 +1,339 @@
+/** 84softworks landing — section and component styles. Token-driven; see tokens.css. */
+
+.wrap {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--sp-48);
+}
+
+/* --- Brand top-band: navy nav + hero wordmark --- */
+.topband {
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--brand);
+}
+
+nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+/* small top-left wordmark — Clash Display */
+.brand {
+  font-family: var(--wordmark-font);
+  font-size: 20px;
+  letter-spacing: -0.03em;
+  color: var(--on-brand);
+}
+
+.navlinks {
+  display: flex;
+  gap: var(--sp-24);
+}
+
+.navlinks a {
+  position: relative;
+  color: var(--on-brand);
+  text-decoration: none;
+  font-size: var(--fs-nav);
+  padding-bottom: var(--sp-8);
+  opacity: 0.85;
+}
+
+.navlinks a:hover,
+.navlinks a.is-active {
+  opacity: 1;
+}
+
+/* active dot in accent — ties the orange into the navy header */
+.navlinks a.is-active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.cta-pill {
+  border: 1px solid var(--on-brand);
+  border-radius: var(--r-pill);
+  padding: var(--sp-8) 20px;
+  font-size: var(--fs-nav);
+  text-decoration: none;
+  color: var(--on-brand);
+}
+
+.cta-pill:hover {
+  background: var(--on-brand);
+  color: var(--brand);
+}
+
+.hero {
+  padding: 40px 0 88px;
+}
+
+/* hero wordmark — Clash Display */
+.wordmark {
+  font-family: var(--wordmark-font);
+  font-size: var(--text-wordmark);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: var(--on-brand);
+  white-space: nowrap;
+}
+
+/* --- Editorial body on white --- */
+section {
+  padding: var(--sp-64) 0;
+}
+
+.intro {
+  padding: 88px 0 var(--sp-64);
+}
+
+.heroline {
+  font-size: var(--text-heroline);
+  font-weight: var(--fw-regular);
+  line-height: 1.05;
+  letter-spacing: var(--tracking);
+  max-width: 900px;
+}
+
+.lede {
+  font-size: var(--text-subheading);
+  line-height: 1.33;
+  letter-spacing: -0.55px;
+  color: var(--ash);
+  margin-top: var(--sp-24);
+  max-width: 720px;
+}
+
+.metastrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-24) var(--sp-48);
+  margin-top: 40px;
+  font-size: var(--text-body);
+}
+
+.metastrip strong {
+  color: var(--accent);
+  font-weight: var(--fw-regular);
+}
+
+.hr {
+  height: 1px;
+  background: var(--hairline);
+  border: 0;
+  width: 100%;
+}
+
+.kicker {
+  font-size: var(--fs-nav);
+  color: var(--accent);
+  margin-top: var(--sp-64);
+  margin-bottom: var(--sp-24);
+}
+
+h2 {
+  font-size: var(--text-heading);
+  font-weight: var(--fw-regular);
+  line-height: 1;
+  letter-spacing: var(--tracking);
+}
+
+.body {
+  font-size: var(--text-body);
+  line-height: 1.56;
+  letter-spacing: -0.45px;
+  max-width: 720px;
+  margin-top: var(--sp-24);
+}
+
+.body--tight {
+  margin-top: var(--sp-16);
+}
+
+.muted {
+  color: var(--ash);
+}
+
+/* --- Founder --- */
+.founder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-48);
+  align-items: start;
+  margin-top: 40px;
+}
+
+.founder__photo {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+}
+
+.name {
+  font-size: var(--text-subheading);
+  letter-spacing: -0.55px;
+}
+
+.socials {
+  display: flex;
+  gap: var(--sp-24);
+  margin-top: 32px;
+}
+
+.socials a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: var(--fs-nav);
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 3px;
+}
+
+.socials a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* --- Flagship tiles --- */
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-24);
+  margin-top: 40px;
+}
+
+.tile__ph {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background: var(--hairline);
+}
+
+.tile h3 {
+  font-size: var(--text-subheading);
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.55px;
+  margin-top: var(--sp-16);
+}
+
+.tile p {
+  font-size: var(--text-body);
+  line-height: 1.56;
+  letter-spacing: -0.45px;
+  margin-top: var(--sp-8);
+}
+
+.kill {
+  font-size: clamp(28px, 4.5vw, 44px);
+  line-height: 1.1;
+  letter-spacing: var(--tracking);
+  max-width: 1000px;
+  margin-top: var(--sp-48);
+}
+
+.kill b {
+  color: var(--accent);
+  font-weight: var(--fw-regular);
+}
+
+/* --- Track record metric list --- */
+.mlist {
+  margin-top: 40px;
+}
+
+.mrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--sp-24);
+  padding: var(--sp-24) 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.mrow__lbl {
+  font-size: var(--text-body);
+  color: var(--ash);
+}
+
+.mrow__num {
+  font-size: var(--text-metric);
+  letter-spacing: var(--tracking);
+}
+
+/* --- Join CTA --- */
+.btn-fill {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--r-pill);
+  padding: 13px 26px;
+  font-size: var(--fs-nav);
+  text-decoration: none;
+  margin-top: 32px;
+}
+
+.btn-fill:hover {
+  filter: brightness(0.92);
+}
+
+/* --- Footer --- */
+footer {
+  padding: var(--sp-64) 0 120px;
+  border-top: 1px solid var(--hairline);
+}
+
+.footer__cols {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-24);
+}
+
+.footer__col {
+  font-size: var(--fs-nav);
+  line-height: 1.9;
+}
+
+footer a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 760px) {
+  .wrap {
+    padding: 0 var(--sp-24);
+  }
+  .navlinks {
+    display: none;
+  }
+  .wordmark {
+    white-space: normal;
+  }
+  .founder {
+    grid-template-columns: 1fr;
+  }
+  .founder__photo {
+    height: 380px;
+  }
+  .tiles {
+    grid-template-columns: 1fr;
+  }
+}
