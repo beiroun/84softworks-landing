@@ -5,10 +5,13 @@
  * and contacts. Copy comes from the i18n dictionary; the header animation lives in
  * useHeaderMorph.
  */
+import { useState } from 'react';
 import { useLang } from '../../i18n/LangContext';
 import { useHeaderMorph } from './useHeaderMorph';
 import LanguageToggle from './LanguageToggle';
 import ContactMenu from './ContactMenu';
+import HeroField from './HeroField';
+import { pickHeroVariant } from './heroFieldEngine';
 import { EMAIL, socialLinks } from './contacts';
 
 const FOUNDER_PHOTO = '/founder.jpg';
@@ -17,7 +20,9 @@ const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
 const Home = () => {
   const { t } = useLang();
-  const { logo, navAnchor, navbar, topband } = useHeaderMorph();
+  const { logo, navAnchor, navbar, topband, eyebrow } = useHeaderMorph();
+  // Pick one of the nine hero designs once per load (stable across re-renders).
+  const [heroVariant] = useState(pickHeroVariant);
 
   return (
     <>
@@ -41,8 +46,12 @@ const Home = () => {
       </header>
 
       <div className="topband" ref={topband}>
+        <HeroField variant={heroVariant} hostRef={topband} />
         <div className="hero">
           <div className="wrap">
+            <div className="eyebrow" ref={eyebrow}>
+              {t.heroEyebrow}
+            </div>
             <div
               className="wordmark"
               ref={logo}

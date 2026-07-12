@@ -21,12 +21,14 @@ export const useHeaderMorph = () => {
   const navAnchor = useRef<HTMLDivElement>(null);
   const navbar = useRef<HTMLElement>(null);
   const topband = useRef<HTMLDivElement>(null);
+  const eyebrow = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const logoEl = logo.current;
     const anchorEl = navAnchor.current;
     const navEl = navbar.current;
     const bandEl = topband.current;
+    const eyebrowEl = eyebrow.current; // optional flourish; morph runs without it
     if (!logoEl || !anchorEl || !navEl || !bandEl) return;
 
     // Measured geometry (page/viewport coords).
@@ -85,6 +87,13 @@ export const useHeaderMorph = () => {
       }
 
       const p = clamp01(y / morphDistance);
+      // Eyebrow is a hero-only flourish: lift it away and fade it out early in the morph,
+      // so it never collides with the compact header the wordmark docks into.
+      if (eyebrowEl) {
+        const ep = clamp01(p / 0.45);
+        eyebrowEl.style.opacity = String(1 - ep);
+        eyebrowEl.style.transform = `translateY(${-ep * 24}px)`;
+      }
       // Pin to the viewport (+y) and interpolate toward the header slot (+p·delta).
       const translateY = y + p * (navViewTop - heroDocTop) + hideCurrent;
       const translateX = p * (navViewLeft - heroDocLeft);
@@ -106,8 +115,12 @@ export const useHeaderMorph = () => {
       window.removeEventListener('resize', measure);
       logoEl.style.transform = '';
       navEl.style.transform = '';
+      if (eyebrowEl) {
+        eyebrowEl.style.opacity = '';
+        eyebrowEl.style.transform = '';
+      }
     };
   }, []);
 
-  return { logo, navAnchor, navbar, topband };
+  return { logo, navAnchor, navbar, topband, eyebrow };
 };

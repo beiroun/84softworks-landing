@@ -45,6 +45,7 @@ export interface Copy {
   nav: NavLink[];
   cta: string;
   contact: ContactCopy;
+  heroEyebrow: string;
   heroline: string;
   lede: string;
   heroMetrics: Metric[];
@@ -83,6 +84,7 @@ const en: Copy = {
     gmail: 'Open in Gmail',
     mail: 'Mail client'
   },
+  heroEyebrow: 'Reliable B2B software · Building since 2023',
   heroline: 'I turn business problems into production software.',
   lede: 'Andrei Baranov, Founder & CEO of 84softworks. Reliable B2B AI — architected end to end.',
   heroMetrics: [
@@ -150,13 +152,14 @@ const ru: Copy = {
     gmail: 'Открыть в Gmail',
     mail: 'Почтовый клиент'
   },
+  heroEyebrow: 'Надёжный B2B-софт · строим с 2023',
   heroline: 'Превращаю бизнес-задачи в продакшн-софт.',
   lede: 'Андрей Баранов, Founder & CEO 84softworks. Надёжный B2B AI – продуман до последнего слоя.',
   heroMetrics: [
     { value: '250K+', label: 'звонков' },
-    { value: '500K+', label: 'юзеров' },
+    { value: '500K+', label: 'пользователей' },
     { value: '14M+', label: 'платежей' },
-    { value: '11', label: 'продуктов в проде' }
+    { value: '11', label: 'продуктов в продакшене' }
   ],
   founderKicker: 'Основатель и CEO',
   founderName: 'Андрей Баранов · beiroun',

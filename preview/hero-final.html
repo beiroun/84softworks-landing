@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>84softworks — hero (9 designs · random)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet" />
+<style>
+  :root{--brand:#212842;--accent:#dd5410;--font:'Onest',system-ui,sans-serif;--wordmark-font:'Clash Display',system-ui,sans-serif;--max:1400px;--pad:48px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);background:var(--brand);color:#fff}
+
+  .hero{position:relative;min-height:92vh;display:flex;flex-direction:column;overflow:hidden;background:var(--brand);cursor:crosshair}
+  .hero__canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+  .hero__nav,.hero__band{position:relative;z-index:2;max-width:var(--max);margin:0 auto;width:100%;padding:0 var(--pad);pointer-events:none}
+  .hero__nav{height:60px;display:flex;align-items:center;justify-content:space-between;flex:0 0 auto}
+  .brand{font-family:var(--wordmark-font);font-weight:600;font-size:20px;letter-spacing:-.03em}
+  .links{display:flex;gap:24px;font-size:15px;opacity:.85}
+  .cta{border:1px solid rgba(255,255,255,.85);border-radius:999px;padding:7px 18px;font-size:15px}
+  .hero__band{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;padding:40px var(--pad) 96px}
+  .eyebrow{display:inline-block;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
+  .wordmark{font-family:var(--wordmark-font);font-weight:600;font-size:clamp(64px,15vw,200px);line-height:.85;letter-spacing:-.05em;white-space:nowrap}
+
+  /* test-only control — pure random happens on load; buttons just help review */
+  .ctl{position:fixed;left:16px;bottom:16px;z-index:50;display:flex;align-items:center;gap:8px;
+    background:rgba(10,12,22,.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);
+    border-radius:999px;padding:6px 8px 6px 14px;font-size:13px;color:#fff}
+  .ctl__name{opacity:.9;min-width:190px}
+  .ctl__name b{color:var(--accent);font-weight:500}
+  .ctl button{border:0;border-radius:999px;padding:6px 12px;font-family:var(--font);font-size:13px;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#fff}
+  .ctl button:hover{background:rgba(255,255,255,.22)}
+</style>
+</head>
+<body>
+  <div class="hero" id="hero">
+    <canvas class="hero__canvas" id="canvas"></canvas>
+    <div class="hero__nav">
+      <span class="brand">84softworks</span>
+      <nav class="links"><span>Founder</span><span>Flagship</span><span>Track</span><span>Join</span></nav>
+      <span class="cta">Связаться</span>
+    </div>
+    <div class="hero__band">
+      <div class="eyebrow">Reliable B2B software · Building since 2023</div>
+      <div class="wordmark">84softworks</div>
+    </div>
+  </div>
+
+  <div class="ctl">
+    <span class="ctl__name" id="ctlName"></span>
+    <button id="btnRandom">🎲 рандом</button>
+    <button id="btnNext">next →</button>
+  </div>
+
+<script>
+  const ACCENT = [221, 84, 16];
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lerp = (a, b, k) => a + (b - a) * k;
+
+  function roundRect(ctx, x, y, w, h, r) {
+    r = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  // Shared canvas boot: sizing, mouse tracking on the hero, teardown.
+  function boot(canvas, hero) {
+    const ctx = canvas.getContext('2d');
+    const state = { W: 0, H: 0, mx: null, my: null, raf: 0 };
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      state.W = canvas.clientWidth;
+      state.H = canvas.clientHeight;
+      canvas.width = state.W * dpr;
+      canvas.height = state.H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (state.onResize) state.onResize();
+    }
+    const onMove = (e) => {
+      const r = canvas.getBoundingClientRect();
+      state.mx = e.clientX - r.left;
+      state.my = e.clientY - r.top;
+      if (state.onMove) state.onMove(state.mx, state.my);
+    };
+    const onLeave = () => { state.mx = state.my = null; };
+    const onClick = (e) => {
+      if (!state.onClick) return;
+      const r = canvas.getBoundingClientRect();
+      state.onClick(e.clientX - r.left, e.clientY - r.top);
+    };
+    window.addEventListener('resize', resize);
+    hero.addEventListener('mousemove', onMove);
+    hero.addEventListener('mouseleave', onLeave);
+    hero.addEventListener('click', onClick);
+    resize();
+    state.destroy = () => {
+      cancelAnimationFrame(state.raf);
+      window.removeEventListener('resize', resize);
+      hero.removeEventListener('mousemove', onMove);
+      hero.removeEventListener('mouseleave', onLeave);
+      hero.removeEventListener('click', onClick);
+    };
+    return { ctx, state, resize };
+  }
+
+  function accentGlow(ctx, W, H) {
+    const g = ctx.createRadialGradient(W * 0.85, H * 1.05, 0, W * 0.85, H * 1.05, H * 1.1);
+    g.addColorStop(0, 'rgba(221,84,16,0.30)');
+    g.addColorStop(1, 'rgba(221,84,16,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  /* ============================ DOT-GRID ============================ */
+  function makeDotgrid(canvas, hero, variant) {
+    const { ctx, state } = boot(canvas, hero);
+    const S = 40, RADIUS = 150;
+    let cols = 0, rows = 0, pts = [];
+    const cellGlow = new Map();
+    const ripples = [];
+    let lastRx = null, lastRy = null;
+
+    state.onResize = () => {
+      cols = Math.ceil(state.W / S); rows = Math.ceil(state.H / S);
+      pts = [];
+      for (let r = 0; r <= rows; r++) for (let c = 0; c <= cols; c++) pts.push({ hx: c * S, hy: r * S, x: c * S, y: r * S });
+    };
+    state.onResize();
+    state.onMove = (mx, my) => {
+      if (variant !== 'ripple') return;
+      if (lastRx == null || Math.hypot(mx - lastRx, my - lastRy) > 26) {
+        ripples.push({ x: mx, y: my, age: 0 }); lastRx = mx; lastRy = my;
+        if (ripples.length > 18) ripples.shift();
+      }
+    };
+    state.onClick = (x, y) => { if (variant === 'ripple') ripples.push({ x, y, age: 0, big: true }); };
+
+    const baseAlpha = (y) => 0.05 + 0.11 * (1 - (y / state.H) * 0.8);
+    function dot(x, y, g) {
+      const a = Math.min(1, baseAlpha(y) + g * 0.85);
+      ctx.beginPath();
+      ctx.arc(x, y, 1.4 + g * 2.4, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${(255 - 34 * g) | 0},${(255 - 171 * g) | 0},${(255 - 239 * g) | 0},${a})`;
+      ctx.fill();
+    }
+
+    function cells() {
+      for (const [k, v] of cellGlow) { const nv = v * 0.82; nv < 0.01 ? cellGlow.delete(k) : cellGlow.set(k, nv); }
+      if (state.mx != null) {
+        const cc = Math.floor(state.mx / S), cr = Math.floor(state.my / S);
+        const set = (c, r, v) => { const k = c + ',' + r; cellGlow.set(k, Math.max(cellGlow.get(k) || 0, v)); };
+        set(cc, cr, 1); set(cc - 1, cr, .4); set(cc + 1, cr, .4); set(cc, cr - 1, .4); set(cc, cr + 1, .4);
+        set(cc - 1, cr - 1, .22); set(cc + 1, cr - 1, .22); set(cc - 1, cr + 1, .22); set(cc + 1, cr + 1, .22);
+      }
+      for (const [k, v] of cellGlow) { const [c, r] = k.split(',').map(Number); ctx.fillStyle = `rgba(${ACCENT[0]},${ACCENT[1]},${ACCENT[2]},${v * 0.20})`; ctx.fillRect(c * S, r * S, S, S); }
+      for (let r = 0; r <= rows; r++) for (let c = 0; c <= cols; c++) {
+        const g = Math.max(cellGlow.get(c + ',' + r) || 0, cellGlow.get((c - 1) + ',' + r) || 0, cellGlow.get(c + ',' + (r - 1)) || 0, cellGlow.get((c - 1) + ',' + (r - 1)) || 0);
+        dot(c * S, r * S, g);
+      }
+    }
+    function magnetic() {
+      for (const p of pts) {
+        let tx = p.hx, ty = p.hy, g = 0;
+        if (state.mx != null) { const dx = state.mx - p.hx, dy = state.my - p.hy, d = Math.hypot(dx, dy); if (d < RADIUS) { const k = 1 - d / RADIUS; g = Math.pow(k, 1.4); tx = p.hx + dx * k * 0.28; ty = p.hy + dy * k * 0.28; } }
+        p.x = lerp(p.x, tx, 0.18); p.y = lerp(p.y, ty, 0.18);
+        dot(p.x, p.y, g);
+      }
+    }
+    function ripple() {
+      for (let i = ripples.length - 1; i >= 0; i--) { const rp = ripples[i]; rp.age += 1; rp.radius = rp.age * (rp.big ? 4.6 : 3.4); if (rp.radius > (rp.big ? 900 : 520)) ripples.splice(i, 1); }
+      const band = 26;
+      for (let r = 0; r <= rows; r++) for (let c = 0; c <= cols; c++) {
+        const x = c * S, y = r * S; let g = 0;
+        for (const rp of ripples) { const dr = Math.abs(Math.hypot(x - rp.x, y - rp.y) - rp.radius); if (dr < band) { const life = 1 - rp.radius / (rp.big ? 900 : 520); g += (1 - dr / band) * life * (rp.big ? 1 : 0.85); } }
+        dot(x, y, Math.min(1, g));
+      }
+    }
+    const paint = variant === 'magnetic' ? magnetic : variant === 'ripple' ? ripple : cells;
+    function frame() { ctx.clearRect(0, 0, state.W, state.H); accentGlow(ctx, state.W, state.H); paint(); state.raf = requestAnimationFrame(frame); }
+    if (prefersReduced) { ctx.clearRect(0, 0, state.W, state.H); accentGlow(ctx, state.W, state.H); for (let r = 0; r <= rows; r++) for (let c = 0; c <= cols; c++) dot(c * S, r * S, 0); }
+    else state.raf = requestAnimationFrame(frame);
+    return state;
+  }
+
+  /* ============================ WAVEFORM (interactive) ============================ */
+  function makeWaveform(canvas, hero, variant) {
+    const { ctx, state } = boot(canvas, hero);
+    const SIG = 120, PULL = 0.85, SPEED = 1.7;
+    let ex = null, ey = null, mAmt = 0;
+
+    const bump = (x) => (ex == null ? 0 : Math.exp(-((x - ex) * (x - ex)) / (2 * SIG * SIG)));
+
+    function line(t, baseY, amp, alpha, lw, glow) {
+      const path = new Path2D();
+      for (let x = 0; x <= state.W; x += 8) {
+        let y = baseY + Math.sin(x * 0.012 + t * 1.2) * amp + Math.sin(x * 0.026 - t * 0.9) * amp * 0.5 + Math.sin(x * 0.006 + t * 0.4) * amp * 0.3;
+        if (ex != null && mAmt > 0.01) y += (ey - y) * bump(x) * PULL * mAmt;
+        x === 0 ? path.moveTo(x, y) : path.lineTo(x, y);
+      }
+      ctx.lineJoin = 'round';
+      // cheap glow: one wide translucent pass instead of costly shadowBlur
+      if (glow) {
+        ctx.strokeStyle = `rgba(${ACCENT[0]},${ACCENT[1]},${ACCENT[2]},0.14)`;
+        ctx.lineWidth = lw + 8;
+        ctx.stroke(path);
+      }
+      ctx.strokeStyle = `rgba(${ACCENT[0]},${ACCENT[1]},${ACCENT[2]},${alpha})`;
+      ctx.lineWidth = lw;
+      ctx.stroke(path);
+    }
+    function fill(t, baseY, amp, color) {
+      ctx.beginPath(); ctx.moveTo(0, state.H);
+      for (let x = 0; x <= state.W; x += 8) {
+        let y = baseY + Math.sin(x * 0.010 + t * 1.1) * amp + Math.sin(x * 0.022 - t * 0.8) * amp * 0.5;
+        if (ex != null && mAmt > 0.01) y += (ey - y) * bump(x) * PULL * mAmt;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(state.W, state.H); ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+    }
+    function bars(t) {
+      const gap = 10, bw = 6, step = gap + bw, baseY = state.H, maxH = state.H * 0.52;
+      for (let i = 0, x = 0; x < state.W; i++, x += step) {
+        const n = 0.5 + 0.5 * Math.sin(i * 0.5 + t * 3) * (0.6 + 0.4 * Math.sin(i * 0.13 - t * 1.7));
+        let h = 6 + Math.abs(n) * maxH;
+        // bounded reactive boost near the cursor — grows in place, never flies to the mouse
+        if (ex != null && mAmt > 0.01) h = Math.min(h + bump(x) * mAmt * maxH * 0.55, state.H * 0.78);
+        const edge = Math.min(1, Math.min(x, state.W - x) / 140);
+        const g = ctx.createLinearGradient(0, baseY - h, 0, baseY);
+        g.addColorStop(0, `rgba(${ACCENT[0]},${ACCENT[1]},${ACCENT[2]},${0.9 * edge})`);
+        g.addColorStop(1, `rgba(${ACCENT[0]},${ACCENT[1]},${ACCENT[2]},${0.12 * edge})`);
+        ctx.fillStyle = g; roundRect(ctx, x, baseY - h, bw, h, 3); ctx.fill();
+      }
+    }
+
+    function ribbon(t) {
+      line(t * 0.7, state.H * 0.14, state.H * 0.02, 0.10, 1, false);
+      line(t * 0.85, state.H * 0.42, state.H * 0.06, 0.18, 1.5, false);
+      line(t, state.H * 0.60, state.H * 0.14, 0.9, 2.5, true);
+    }
+    function layered(t) {
+      fill(t * 0.6, state.H * 0.66, state.H * 0.10, 'rgba(255,255,255,0.04)');
+      fill(t * 0.8, state.H * 0.72, state.H * 0.12, 'rgba(221,84,16,0.10)');
+      fill(t * 1.0, state.H * 0.80, state.H * 0.10, 'rgba(221,84,16,0.16)');
+      line(t, state.H * 0.66, state.H * 0.10, 0.85, 2, true);
+      line(t * 0.7, state.H * 0.14, state.H * 0.02, 0.10, 1, false);
+    }
+    const paint = variant === 'bars' ? bars : variant === 'layered' ? layered : ribbon;
+
+    const start = performance.now();
+    function frame(now) {
+      // ease the mouse so the wave trails it, and relax when the cursor leaves
+      mAmt = lerp(mAmt, state.mx != null ? 1 : 0, 0.16);
+      if (state.mx != null) { ex = ex == null ? state.mx : lerp(ex, state.mx, 0.28); ey = ey == null ? state.my : lerp(ey, state.my, 0.28); }
+      ctx.clearRect(0, 0, state.W, state.H);
+      accentGlow(ctx, state.W, state.H);
+      paint(((now - start) / 1000) * SPEED);
+      state.raf = requestAnimationFrame(frame);
+    }
+    if (prefersReduced) { ctx.clearRect(0, 0, state.W, state.H); accentGlow(ctx, state.W, state.H); paint(0); }
+    else state.raf = requestAnimationFrame(frame);
+    return state;
+  }
+
+  /* ============================ NODE-NETWORK ============================ */
+  function makeNetwork(canvas, hero, variant) {
+    const { ctx, state } = boot(canvas, hero);
+    const LINK = 132, MOUSE_R = 190;
+    let nodes = [];
+    state.onResize = () => {
+      const count = Math.max(24, Math.min(80, Math.round(state.W * state.H / 17000)));
+      nodes = [];
+      for (let i = 0; i < count; i++) { const x = Math.random() * state.W, y = Math.random() * state.H; nodes.push({ x, y, hx: x, hy: y, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, ph: Math.random() }); }
+    };
+    state.onResize();
+
+    function step() {
+      for (const n of nodes) {
+        if (variant === 'magnetic') {
+          n.x += (n.hx - n.x) * .05; n.y += (n.hy - n.y) * .05;
+          if (state.mx != null) { const dx = state.mx - n.x, dy = state.my - n.y, d = Math.hypot(dx, dy); if (d < MOUSE_R) { const f = (1 - d / MOUSE_R) * .18; n.x += dx * f; n.y += dy * f; } }
+        } else {
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > state.W) n.vx *= -1; if (n.y < 0 || n.y > state.H) n.vy *= -1;
+          n.x = Math.max(0, Math.min(state.W, n.x)); n.y = Math.max(0, Math.min(state.H, n.y));
+        }
+      }
+    }
+    function draw(t) {
+      for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d >= LINK) continue;
+        const k = 1 - d / LINK;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(255,255,255,${k * 0.16})`; ctx.lineWidth = 1; ctx.stroke();
+        if (variant === 'pulses') {
+          const frac = ((t * 0.35) + (a.ph + b.ph) * 0.5) % 1;
+          ctx.beginPath(); ctx.arc(lerp(a.x, b.x, frac), lerp(a.y, b.y, frac), 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(221,84,16,${k * 0.9})`; ctx.fill();
+        }
+      }
+      for (const n of nodes) {
+        let near = 0;
+        if (state.mx != null) { const d = Math.hypot(n.x - state.mx, n.y - state.my); if (d < MOUSE_R) { near = 1 - d / MOUSE_R; ctx.beginPath(); ctx.moveTo(state.mx, state.my); ctx.lineTo(n.x, n.y); ctx.strokeStyle = `rgba(221,84,16,${near * 0.45})`; ctx.lineWidth = 1; ctx.stroke(); } }
+        ctx.beginPath(); ctx.arc(n.x, n.y, 1.7 + near * 2.4, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${(255 - 34 * near) | 0},${(255 - 171 * near) | 0},${(255 - 239 * near) | 0},${0.45 + near * 0.55})`; ctx.fill();
+      }
+    }
+    const start = performance.now();
+    function frame(now) { step(); ctx.clearRect(0, 0, state.W, state.H); accentGlow(ctx, state.W, state.H); draw((now - start) / 1000); state.raf = requestAnimationFrame(frame); }
+    if (prefersReduced) { ctx.clearRect(0, 0, state.W, state.H); accentGlow(ctx, state.W, state.H); draw(0); }
+    else state.raf = requestAnimationFrame(frame);
+    return state;
+  }
+
+  /* ============================ SELECTOR ============================ */
+  const DESIGNS = [
+    { make: makeDotgrid, variant: 'cells', label: 'Dot-grid · Cell fade' },
+    { make: makeDotgrid, variant: 'magnetic', label: 'Dot-grid · Magnetic' },
+    { make: makeDotgrid, variant: 'ripple', label: 'Dot-grid · Ripple' },
+    { make: makeWaveform, variant: 'ribbon', label: 'Waveform · Ribbon' },
+    { make: makeWaveform, variant: 'bars', label: 'Waveform · Bars' },
+    { make: makeWaveform, variant: 'layered', label: 'Waveform · Layered' },
+    { make: makeNetwork, variant: 'drift', label: 'Network · Drift' },
+    { make: makeNetwork, variant: 'magnetic', label: 'Network · Magnetic' },
+    { make: makeNetwork, variant: 'pulses', label: 'Network · Pulses' }
+  ];
+
+  const canvas = document.getElementById('canvas');
+  const hero = document.getElementById('hero');
+  const ctlName = document.getElementById('ctlName');
+  let current = null;
+  let idx = Math.floor(Math.random() * DESIGNS.length); // pure random on load
+
+  function mount(i) {
+    if (current && current.destroy) current.destroy();
+    idx = ((i % DESIGNS.length) + DESIGNS.length) % DESIGNS.length;
+    const d = DESIGNS[idx];
+    current = d.make(canvas, hero, d.variant);
+    ctlName.innerHTML = `<b>${idx + 1}/9</b> — ${d.label}`;
+  }
+
+  document.getElementById('btnRandom').addEventListener('click', () => mount(Math.floor(Math.random() * DESIGNS.length)));
+  document.getElementById('btnNext').addEventListener('click', () => mount(idx + 1));
+  mount(idx);
+</script>
+</body>
+</html>
