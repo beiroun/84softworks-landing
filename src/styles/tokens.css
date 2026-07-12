@@ -20,8 +20,8 @@
   --ash: #a3a3a3; /* lede, captions, labels */
   --hairline: #e5e7eb; /* dividers, tile placeholders */
 
-  /* --- Typography (Fontshare: switzer@400 + clash-display@400) --- */
-  --font: 'Switzer', ui-sans-serif, system-ui, -apple-system, sans-serif; /* body · nav · CTA */
+  /* --- Typography — Onest (Google, Latin + Cyrillic) · Clash Display (Fontshare) --- */
+  --font: 'Onest', ui-sans-serif, system-ui, -apple-system, sans-serif; /* body · nav · CTA */
   --wordmark-font: 'Clash Display', ui-sans-serif, system-ui, sans-serif; /* two wordmarks only */
   --tracking: -0.025em;
 
