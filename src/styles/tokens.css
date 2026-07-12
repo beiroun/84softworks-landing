@@ -46,6 +46,7 @@
 
   /* --- Layout / radius --- */
   --page-max-width: 1400px;
+  --navh: 60px; /* compact fixed header */
   --r-pill: 9999px;
   --r-flat: 0;
 }

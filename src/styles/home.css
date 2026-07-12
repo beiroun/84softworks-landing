@@ -6,32 +6,33 @@
   padding: 0 var(--sp-48);
 }
 
-/* --- Brand top-band: navy nav + hero wordmark --- */
-.topband {
-  background: var(--brand);
-  color: var(--on-brand);
-}
-
-nav {
-  position: sticky;
+/* --- Fixed header: compact bar that hosts the wordmark's final slot --- */
+.navbar {
+  position: fixed;
   top: 0;
-  z-index: 20;
+  left: 0;
+  right: 0;
+  z-index: 30;
   background: var(--brand);
+  will-change: transform;
 }
 
-nav .wrap {
+.navbar .wrap {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 72px;
+  height: var(--navh);
 }
 
-/* small top-left wordmark — Clash Display */
-.brand {
+/* Invisible measure anchor — the morph target for the wordmark's final slot. */
+.brand-anchor {
   font-family: var(--wordmark-font);
   font-size: 20px;
+  line-height: 1;
   letter-spacing: -0.03em;
   color: var(--on-brand);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .navlinks {
@@ -66,6 +67,47 @@ nav .wrap {
   background: var(--accent);
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-16);
+}
+
+.langtoggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--r-pill);
+}
+
+.langtoggle button {
+  border: 0;
+  border-radius: var(--r-pill);
+  padding: 4px 12px;
+  background: transparent;
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--on-brand);
+  opacity: 0.7;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+
+.langtoggle button:hover {
+  opacity: 1;
+}
+
+/* active segment inverts to a solid pill (mirrors the CTA hover) */
+.langtoggle button.is-active {
+  background: var(--on-brand);
+  color: var(--brand);
+  opacity: 1;
+}
+
 .cta-pill {
   border: 1px solid var(--on-brand);
   border-radius: var(--r-pill);
@@ -80,18 +122,30 @@ nav .wrap {
   color: var(--brand);
 }
 
-.hero {
-  padding: 40px 0 88px;
+/* --- Navy hero band: tall, roomy; padding-top clears the fixed header --- */
+.topband {
+  background: var(--brand);
+  padding-top: var(--navh);
 }
 
-/* hero wordmark — Clash Display */
+.hero {
+  padding: 88px 0 136px;
+}
+
+/* Morphing wordmark — the single element that travels into the header. */
 .wordmark {
+  display: inline-block;
   font-family: var(--wordmark-font);
   font-size: var(--text-wordmark);
   line-height: 0.85;
   letter-spacing: -0.05em;
   color: var(--on-brand);
   white-space: nowrap;
+  transform-origin: top left;
+  will-change: transform;
+  position: relative;
+  z-index: 40;
+  cursor: pointer;
 }
 
 /* --- Editorial body on white --- */
@@ -323,6 +377,10 @@ footer a:hover {
   }
   .navlinks {
     display: none;
+  }
+  /* mobile: morph is disabled, so the anchor becomes a static small logo */
+  .brand-anchor {
+    opacity: 1;
   }
   .wordmark {
     white-space: normal;
