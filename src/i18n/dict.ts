@@ -33,9 +33,18 @@ export interface Kill {
   post: string;
 }
 
+export interface ContactCopy {
+  title: string;
+  copy: string;
+  copied: string;
+  gmail: string;
+  mail: string;
+}
+
 export interface Copy {
   nav: NavLink[];
   cta: string;
+  contact: ContactCopy;
   heroline: string;
   lede: string;
   heroMetrics: Metric[];
@@ -54,6 +63,7 @@ export interface Copy {
   joinKicker: string;
   joinTitle: string;
   joinBody: string;
+  joinNote: string;
   footerTagline: string;
   footerRights: string;
 }
@@ -66,6 +76,13 @@ const en: Copy = {
     { href: '#join', label: 'Join' }
   ],
   cta: 'Get in touch',
+  contact: {
+    title: 'Get in touch',
+    copy: 'Copy',
+    copied: 'Copied ✓',
+    gmail: 'Open in Gmail',
+    mail: 'Mail client'
+  },
   heroline: 'I turn business problems into production software.',
   lede: 'Andrei Baranov, Founder & CEO of 84softworks. Reliable B2B AI — architected end to end.',
   heroMetrics: [
@@ -100,19 +117,20 @@ const en: Copy = {
   trackKicker: 'Track record',
   trackTitle: 'The numbers',
   trackBody:
-    '84softworks is founded on years of shipping software that runs in production, not in slides. As Head of Development at a telecom I led development of eleven production products with a six-person team.',
+    'There are years behind these numbers, not one lucky launch. A small team under my lead scaled these products in production, and most of it still carries real load today.',
   trackRecord: [
     { label: 'Calls analyzed', value: '250K+' },
     { label: 'Users · MAU', value: '500K+ · 200K' },
-    { label: 'Service requests', value: '1.5M+' },
-    { label: 'Payment records', value: '14M+' },
-    { label: 'Intercoms · cameras', value: '5,000 · 20,000' },
-    { label: 'Team · building since', value: '6 · 2023' }
+    { label: 'Client requests', value: '1.5M+' },
+    { label: 'Payments processed', value: '14M+' },
+    { label: 'Intercoms & cameras managed', value: '5,000 · 20,000' },
+    { label: 'Engineers on the team', value: '6' }
   ],
   joinKicker: 'Join',
   joinTitle: 'Always open to exceptional people.',
   joinBody:
     "Not actively hiring right now — but if you build software that holds and want to work with someone who's been through every layer, reach out.",
+  joinNote: 'I reply personally — usually within a day.',
   footerTagline: 'Building since 2023 · 84softworks.io',
   footerRights: '© 2026 84softworks'
 };
@@ -125,6 +143,13 @@ const ru: Copy = {
     { href: '#join', label: 'Команда' }
   ],
   cta: 'Связаться',
+  contact: {
+    title: 'Связаться',
+    copy: 'Копировать',
+    copied: 'Скопировано ✓',
+    gmail: 'Открыть в Gmail',
+    mail: 'Почтовый клиент'
+  },
   heroline: 'Превращаю бизнес-задачи в продакшн-софт.',
   lede: 'Андрей Баранов, Founder & CEO 84softworks. Надёжный B2B AI – продуман до последнего слоя.',
   heroMetrics: [
@@ -156,22 +181,23 @@ const ru: Copy = {
     bold: 'меньше $2 700',
     post: ' железа. Корпоративная аналитика без корпоративного железа.'
   },
-  trackKicker: 'Опыт и цифры',
+  trackKicker: 'Опыт',
   trackTitle: 'Цифры',
   trackBody:
-    '84softworks стоит на годах софта, который работает в проде, а не в слайдах. Как Head of Development в телекоме я вёл разработку одиннадцати продакшн-продуктов командой из шести – от AI-платформ до хайлоуд-мобилок и self-hosted Kubernetes.',
+    'За этими числами – годы работы, а не один удачный запуск. Небольшая команда под моим руководством довела продукты до такого масштаба в проде, и большинство контуров держит нагрузку до сих пор.',
   trackRecord: [
     { label: 'Проанализировано звонков', value: '250K+' },
     { label: 'Пользователи · MAU', value: '500K+ · 200K' },
-    { label: 'Заявки', value: '1.5M+' },
-    { label: 'Платёжные записи', value: '14M+' },
-    { label: 'Домофоны · камеры', value: '5,000 · 20,000' },
-    { label: 'Команда · строим с', value: '6 · 2023' }
+    { label: 'Обращений от клиентов', value: '1.5M+' },
+    { label: 'Проведено платежей', value: '14M+' },
+    { label: 'Домофонов и камер под управлением', value: '5,000 · 20,000' },
+    { label: 'Инженеров в команде', value: '6' }
   ],
   joinKicker: 'Команда',
   joinTitle: 'Всегда открыт для сильных.',
   joinBody:
     'Прямо сейчас активного найма нет – но если ты делаешь софт, который держит, и хочешь работать с тем, кто прошёл каждый слой стека, напиши.',
+  joinNote: 'Отвечаю лично – обычно в течение дня.',
   footerTagline: 'Строим с 2023 · 84softworks.io',
   footerRights: '© 2026 84softworks'
 };

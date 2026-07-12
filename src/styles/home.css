@@ -112,9 +112,13 @@
   border: 1px solid var(--on-brand);
   border-radius: var(--r-pill);
   padding: var(--sp-8) 20px;
+  font-family: var(--font);
   font-size: var(--fs-nav);
+  line-height: 1;
   text-decoration: none;
   color: var(--on-brand);
+  background: transparent;
+  cursor: pointer;
 }
 
 .cta-pill:hover {
@@ -333,15 +337,171 @@ h2 {
   display: inline-block;
   background: var(--accent);
   color: var(--on-accent);
+  border: 0;
   border-radius: var(--r-pill);
   padding: 13px 26px;
+  font-family: var(--font);
   font-size: var(--fs-nav);
+  line-height: 1;
   text-decoration: none;
-  margin-top: 32px;
+  cursor: pointer;
 }
 
 .btn-fill:hover {
   filter: brightness(0.92);
+}
+
+/* Contact block under the Join copy: trigger button + the address as a visible line,
+   so the section reads as a contact card instead of one lonely pill. */
+.join-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-24);
+  margin-top: 32px;
+}
+
+.join-cta__note {
+  max-width: 340px;
+  color: var(--ash);
+  font-size: var(--fs-nav);
+  line-height: 1.4;
+}
+
+/* --- Contact popover: shared trigger + panel for the header pill and Join button --- */
+.contactmenu {
+  position: relative;
+  display: inline-block;
+}
+
+/* Portaled to <body>; anchored via inline top/left|right computed from the trigger.
+   z-index clears the morphing wordmark (z 40) and the fixed header (z 30). */
+.contactmenu__panel {
+  position: fixed;
+  z-index: 100;
+  min-width: 264px;
+  padding: var(--sp-16);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(10, 10, 10, 0.12);
+  color: var(--ink);
+}
+
+/* mobile: full-width bottom sheet regardless of trigger position (CSS-only layout) */
+.contactmenu__panel--sheet {
+  top: auto;
+  left: var(--sp-16);
+  right: var(--sp-16);
+  bottom: var(--sp-16);
+  min-width: 0;
+}
+
+.contactmenu__title {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin-bottom: var(--sp-12);
+}
+
+/* the address is itself the copy trigger; clicking it swaps the copy icon for a check */
+.contactmenu__email {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-12);
+  width: calc(100% + var(--sp-16));
+  margin: 0 calc(-1 * var(--sp-8)) var(--sp-4);
+  padding: var(--sp-8);
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  font-family: var(--font);
+  font-size: var(--fs-nav);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.contactmenu__email:hover {
+  background: rgba(10, 10, 10, 0.04);
+}
+
+/* copy + check icons stacked in one slot — copied state fades the check in, no text */
+.contactmenu__feedback {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.contactmenu__copy-icon,
+.contactmenu__check-icon {
+  position: absolute;
+  transition: opacity 0.15s ease, transform 0.18s ease, color 0.15s ease;
+}
+
+.contactmenu__copy-icon {
+  color: var(--ash);
+}
+
+.contactmenu__email:hover .contactmenu__copy-icon {
+  color: var(--accent);
+}
+
+.contactmenu__check-icon {
+  color: var(--accent);
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.contactmenu__email.is-copied .contactmenu__copy-icon {
+  opacity: 0;
+}
+
+.contactmenu__email.is-copied .contactmenu__check-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.contactmenu__row {
+  display: block;
+  padding: var(--sp-8) 0;
+  font-size: var(--fs-nav);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.contactmenu__row:hover {
+  color: var(--accent);
+}
+
+.contactmenu__sep {
+  height: 1px;
+  background: var(--hairline);
+  margin: var(--sp-8) 0;
+}
+
+.contactmenu__socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-16);
+  padding-top: var(--sp-4);
+}
+
+.contactmenu__socials a {
+  font-size: var(--fs-nav);
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.contactmenu__socials a:hover {
+  color: var(--accent);
 }
 
 /* --- Footer --- */

@@ -8,16 +8,10 @@
 import { useLang } from '../../i18n/LangContext';
 import { useHeaderMorph } from './useHeaderMorph';
 import LanguageToggle from './LanguageToggle';
+import ContactMenu from './ContactMenu';
+import { EMAIL, socialLinks } from './contacts';
 
-const EMAIL = '84softworks@gmail.com';
 const FOUNDER_PHOTO = '/founder.jpg';
-
-// Language-invariant social links (labels and hrefs are the same in every language).
-const socialLinks = [
-  { label: 'GitHub', href: 'https://github.com/beiroun' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/andrei-baranov-173993419' },
-  { label: 'Instagram', href: 'https://www.instagram.com/84softworks' }
-];
 
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -41,9 +35,7 @@ const Home = () => {
           </nav>
           <div className="nav-actions">
             <LanguageToggle />
-            <a className="cta-pill" href={`mailto:${EMAIL}`}>
-              {t.cta}
-            </a>
+            <ContactMenu variant="pill" />
           </div>
         </div>
       </header>
@@ -152,9 +144,10 @@ const Home = () => {
           <div className="kicker">{t.joinKicker}</div>
           <h2>{t.joinTitle}</h2>
           <p className="body">{t.joinBody}</p>
-          <a className="btn-fill" href={`mailto:${EMAIL}`}>
-            {t.cta}
-          </a>
+          <div className="join-cta">
+            <ContactMenu variant="fill" />
+            <span className="join-cta__note">{t.joinNote}</span>
+          </div>
         </div>
       </section>
 
