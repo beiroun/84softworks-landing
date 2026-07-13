@@ -18,7 +18,7 @@ const FOUNDER_PHOTO = '/founder.jpg';
 
 const Home = () => {
   const { t } = useLang();
-  const { logo, navAnchor, navbar, topband, eyebrow } = useHeaderMorph();
+  const { logo, navAnchor, navbar, bandFront, bandBg, eyebrow } = useHeaderMorph();
   // Pick one of the nine hero designs on load; the full-screen wordmark re-rolls it.
   const [heroVariant, setHeroVariant] = useState(pickHeroVariant);
 
@@ -69,8 +69,14 @@ const Home = () => {
         </div>
       </header>
 
-      <div className="topband" ref={topband}>
-        <HeroField variant={heroVariant} hostRef={topband} />
+      {/* Animated backdrop — fixed behind the page body, which scrolls up and covers it. */}
+      <div className="bandbg" ref={bandBg} aria-hidden="true">
+        <HeroField variant={heroVariant} hostRef={bandBg} />
+      </div>
+
+      {/* Wordmark layer — fixed above the page body so the morphing wordmark reaches the
+          header uncovered. Transparent to pointer input except the wordmark itself. */}
+      <div className="bandfront" ref={bandFront}>
         <div className="hero">
           <div className="wrap">
             <div className="eyebrow" ref={eyebrow}>
@@ -96,7 +102,11 @@ const Home = () => {
         </div>
       </div>
 
-      <section className="intro">
+      {/* Holds the band's place in normal flow so the body starts below it (desktop). */}
+      <div className="band-spacer" aria-hidden="true" />
+
+      <main className="page-body">
+        <section className="intro">
         <div className="wrap">
           <h1 className="heroline">{t.heroline}</h1>
           <p className="lede">{t.lede}</p>
@@ -208,6 +218,7 @@ const Home = () => {
           </div>
         </div>
       </footer>
+      </main>
     </>
   );
 };
