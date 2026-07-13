@@ -13,7 +13,12 @@
   left: 0;
   right: 0;
   z-index: 30;
-  background: var(--brand);
+  /* Transparent at the very top so the hero field shows through; the morph hook
+     fills --nav-alpha toward 1 as you scroll. Blur keeps nav text legible over
+     whichever animation is running behind it. */
+  background: rgba(var(--brand-rgb), var(--nav-alpha, 1));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   will-change: transform;
 }
 
@@ -143,6 +148,9 @@
   z-index: 0;
   display: block;
   pointer-events: none;
+  /* opaque navy so a re-rolled layer fully covers the one beneath it — clean crossfade */
+  background: var(--brand);
+  transition: opacity 0.35s ease;
 }
 
 .hero {
@@ -181,6 +189,7 @@
 /* --- Editorial body on white --- */
 section {
   padding: var(--sp-64) 0;
+  scroll-margin-top: calc(var(--navh) + var(--sp-16)); /* clear the fixed header on scroll-to */
 }
 
 .intro {

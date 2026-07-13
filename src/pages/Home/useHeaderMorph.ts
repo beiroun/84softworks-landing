@@ -78,6 +78,9 @@ export const useHeaderMorph = () => {
       updateDirection(y);
       hideCurrent += (hideTarget - hideCurrent) * REVEAL_EASE;
 
+      // Header is transparent at the top (hero field shows through) and fills navy as it scrolls.
+      navEl.style.setProperty('--nav-alpha', String(clamp01(y / (navH * 1.2))));
+
       if (mobile) {
         // No morph on mobile (the wordmark wraps); only the header reveal runs.
         logoEl.style.transform = 'none';
@@ -115,6 +118,7 @@ export const useHeaderMorph = () => {
       window.removeEventListener('resize', measure);
       logoEl.style.transform = '';
       navEl.style.transform = '';
+      navEl.style.removeProperty('--nav-alpha');
       if (eyebrowEl) {
         eyebrowEl.style.opacity = '';
         eyebrowEl.style.transform = '';

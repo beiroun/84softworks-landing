@@ -6,6 +6,7 @@
 :root {
   /* --- Brand band (Slate navy) --- */
   --brand: #212842; /* nav + hero band background */
+  --brand-rgb: 33, 40, 66; /* #212842 as channels — for the scroll-driven header fill */
   --on-brand: #ffffff; /* text on the navy band */
 
   /* --- Accent (warm orange) --- */

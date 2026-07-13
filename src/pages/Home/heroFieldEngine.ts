@@ -68,14 +68,6 @@ export function createHeroField(
 
   const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
 
-  const accentGlow = () => {
-    const g = ctx.createRadialGradient(W * 0.85, H * 1.05, 0, W * 0.85, H * 1.05, H * 1.1);
-    g.addColorStop(0, `rgba(${ACCENT},0.30)`);
-    g.addColorStop(1, `rgba(${ACCENT},0)`);
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, W, H);
-  };
-
   const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
     r = Math.min(r, w / 2, h / 2);
     ctx.beginPath();
@@ -463,14 +455,12 @@ export function createHeroField(
 
   const loop = (now: number) => {
     ctx.clearRect(0, 0, W, H);
-    accentGlow();
     engine.frame((now - start) / 1000);
     raf = requestAnimationFrame(loop);
   };
 
   if (reduce) {
     ctx.clearRect(0, 0, W, H);
-    accentGlow();
     engine.frame(0);
   } else {
     raf = requestAnimationFrame(loop);

@@ -11,18 +11,34 @@ import { useHeaderMorph } from './useHeaderMorph';
 import LanguageToggle from './LanguageToggle';
 import ContactMenu from './ContactMenu';
 import HeroField from './HeroField';
-import { pickHeroVariant } from './heroFieldEngine';
+import { pickHeroVariant, HERO_VARIANTS } from './heroFieldEngine';
 import { EMAIL, socialLinks } from './contacts';
 
 const FOUNDER_PHOTO = '/founder.jpg';
 
-const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
 const Home = () => {
   const { t } = useLang();
   const { logo, navAnchor, navbar, topband, eyebrow } = useHeaderMorph();
-  // Pick one of the nine hero designs once per load (stable across re-renders).
-  const [heroVariant] = useState(pickHeroVariant);
+  // Pick one of the nine hero designs on load; the full-screen wordmark re-rolls it.
+  const [heroVariant, setHeroVariant] = useState(pickHeroVariant);
+
+  // Full-size wordmark shuffles the hero design; once morphed into the header it scrolls to top.
+  const onWordmarkActivate = () => {
+    if (window.scrollY < 8) {
+      setHeroVariant((current) => {
+        const others = HERO_VARIANTS.filter((variant) => variant !== current);
+        return others[Math.floor(Math.random() * others.length)];
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Smooth-scroll to a section by script only — never write the hash to the URL,
+  // so a reload doesn't jump straight to the last-clicked section.
+  const scrollToSection = (href: string) => {
+    document.getElementById(href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <>
@@ -33,7 +49,15 @@ const Home = () => {
           </div>
           <nav className="navlinks">
             {t.nav.map((link, index) => (
-              <a key={link.href} href={link.href} className={index === 0 ? 'is-active' : undefined}>
+              <a
+                key={link.href}
+                href={link.href}
+                className={index === 0 ? 'is-active' : undefined}
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToSection(link.href);
+                }}
+              >
                 {link.label}
               </a>
             ))}
@@ -57,12 +81,12 @@ const Home = () => {
               ref={logo}
               role="button"
               tabIndex={0}
-              aria-label="Scroll to top"
-              onClick={scrollToTop}
+              aria-label="84softworks — shuffle hero background"
+              onClick={onWordmarkActivate}
               onKeyDown={(event) => {
                 if (event.key === 'Enter' || event.key === ' ') {
                   event.preventDefault();
-                  scrollToTop();
+                  onWordmarkActivate();
                 }
               }}
             >
