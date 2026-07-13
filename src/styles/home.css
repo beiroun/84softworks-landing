@@ -201,6 +201,8 @@
   color: var(--accent);
   margin-bottom: var(--sp-24);
   will-change: opacity, transform;
+  cursor: pointer;
+  pointer-events: auto; /* the band layer is click-through; the eyebrow stays clickable */
 }
 
 /* Morphing wordmark — the single element that travels into the header. */

@@ -101,6 +101,7 @@ export const useHeaderMorph = () => {
         navEl.style.setProperty('--nav-alpha', String(clamp01(y / (navH * 1.2))));
         logoEl.style.transform = 'none';
         navEl.style.transform = `translateY(${hideCurrent}px)`;
+        if (eyebrowEl) eyebrowEl.style.pointerEvents = ''; // no fade on mobile — keep it tappable
         raf = requestAnimationFrame(frame);
         return;
       }
@@ -109,11 +110,13 @@ export const useHeaderMorph = () => {
       // Header fills navy in step with the morph, not on a separate short ramp.
       navEl.style.setProperty('--nav-alpha', String(clamp01(p / ALPHA_FRACTION)));
 
-      // Eyebrow is a hero-only flourish: lift and fade it out early in the morph.
+      // Eyebrow is a hero-only flourish: lift and fade it out early in the morph. Once it's
+      // fully faded, drop pointer events so the invisible element can't swallow body clicks.
       if (eyebrowEl) {
         const ep = clamp01(p / 0.45);
         eyebrowEl.style.opacity = String(1 - ep);
         eyebrowEl.style.transform = `translateY(${-ep * 24}px)`;
+        eyebrowEl.style.pointerEvents = ep >= 1 ? 'none' : 'auto';
       }
 
       // Fixed layers, so no scroll compensation — interpolate straight toward the header slot.
@@ -142,6 +145,7 @@ export const useHeaderMorph = () => {
       if (eyebrowEl) {
         eyebrowEl.style.opacity = '';
         eyebrowEl.style.transform = '';
+        eyebrowEl.style.pointerEvents = '';
       }
     };
   }, []);

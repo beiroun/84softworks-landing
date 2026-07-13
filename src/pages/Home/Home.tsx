@@ -22,7 +22,8 @@ const Home = () => {
   // Pick one of the nine hero designs on load; the full-screen wordmark re-rolls it.
   const [heroVariant, setHeroVariant] = useState(pickHeroVariant);
 
-  // Full-size wordmark shuffles the hero design; once morphed into the header it scrolls to top.
+  // Shared by the wordmark and the eyebrow: at the top it shuffles the hero design,
+  // once scrolled it returns to the top.
   const onWordmarkActivate = () => {
     if (window.scrollY < 8) {
       setHeroVariant((current) => {
@@ -31,6 +32,14 @@ const Home = () => {
       });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Keyboard activation for the div-based buttons (wordmark, eyebrow).
+  const onActivateKey = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onWordmarkActivate();
     }
   };
 
@@ -79,7 +88,14 @@ const Home = () => {
       <div className="bandfront" ref={bandFront}>
         <div className="hero">
           <div className="wrap">
-            <div className="eyebrow" ref={eyebrow}>
+            <div
+              className="eyebrow"
+              ref={eyebrow}
+              role="button"
+              tabIndex={0}
+              onClick={onWordmarkActivate}
+              onKeyDown={onActivateKey}
+            >
               {t.heroEyebrow}
             </div>
             <div
@@ -89,12 +105,7 @@ const Home = () => {
               tabIndex={0}
               aria-label="84softworks — shuffle hero background"
               onClick={onWordmarkActivate}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  event.preventDefault();
-                  onWordmarkActivate();
-                }
-              }}
+              onKeyDown={onActivateKey}
             >
               84softworks
             </div>
