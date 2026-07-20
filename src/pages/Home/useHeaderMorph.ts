@@ -21,7 +21,9 @@ import { useEffect, useRef } from 'react';
 const MORPH_MIN = 240; // floor for the morph distance (px) on short viewports
 const REVEAL_EASE = 0.18; // header hide/show smoothing (0..1)
 const DIR_THRESHOLD = 2; // px of scroll before a direction flip counts
-const ALPHA_FRACTION = 0.7; // header reaches full navy at this fraction of the morph
+const GLASS_ALPHA = 0.0; // header tint while the band shows through — 0 so the navy animation
+// is actually visible (any navy tint over the navy band reads as flat navy = no glass at all)
+const SOLIDIFY_START = 0.6; // fraction of the morph after which the header fills to solid navy
 
 export const useHeaderMorph = () => {
   const logo = useRef<HTMLDivElement>(null);
@@ -96,19 +98,23 @@ export const useHeaderMorph = () => {
       updateDirection(y);
       hideCurrent += (hideTarget - hideCurrent) * REVEAL_EASE;
 
+      // Frosted-glass header: stays translucent while the animated band shows through behind
+      // it, then fills to solid navy as the (white) page body rises under it — otherwise the
+      // white nav text would sit on a see-through white. Shared by both layouts; morphDistance
+      // equals the band's cover distance, so p tracks "how far the band has scrolled past".
+      const p = clamp01(y / morphDistance);
+      const solidify = clamp01((p - SOLIDIFY_START) / (1 - SOLIDIFY_START));
+      const eased = solidify * solidify * (3 - 2 * solidify);
+      navEl.style.setProperty('--nav-alpha', String(GLASS_ALPHA + (1 - GLASS_ALPHA) * eased));
+
       if (mobile) {
         // No morph on mobile (the wordmark wraps); only the header reveal runs.
-        navEl.style.setProperty('--nav-alpha', String(clamp01(y / (navH * 1.2))));
         logoEl.style.transform = 'none';
         navEl.style.transform = `translateY(${hideCurrent}px)`;
         if (eyebrowEl) eyebrowEl.style.pointerEvents = ''; // no fade on mobile — keep it tappable
         raf = requestAnimationFrame(frame);
         return;
       }
-
-      const p = clamp01(y / morphDistance);
-      // Header fills navy in step with the morph, not on a separate short ramp.
-      navEl.style.setProperty('--nav-alpha', String(clamp01(p / ALPHA_FRACTION)));
 
       // Eyebrow is a hero-only flourish: lift and fade it out early in the morph. Once it's
       // fully faded, drop pointer events so the invisible element can't swallow body clicks.

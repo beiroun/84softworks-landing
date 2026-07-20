@@ -133,7 +133,7 @@ const en: Copy = {
   joinBody:
     "Not actively hiring right now — but if you build software that holds and want to work with someone who's been through every layer, reach out.",
   joinNote: 'I reply personally — usually within a day.',
-  footerTagline: 'Building since 2023 · 84softworks.io',
+  footerTagline: 'Building since 2023 · 84softworks.com',
   footerRights: '© 2026 84softworks'
 };
 
@@ -201,7 +201,7 @@ const ru: Copy = {
   joinBody:
     'Прямо сейчас активного найма нет – но если ты делаешь софт, который держит, и хочешь работать с тем, кто прошёл каждый слой стека, напиши.',
   joinNote: 'Отвечаю лично – обычно в течение дня.',
-  footerTagline: 'Строим с 2023 · 84softworks.io',
+  footerTagline: 'Строим с 2023 · 84softworks.com',
   footerRights: '© 2026 84softworks'
 };
 
