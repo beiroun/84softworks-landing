@@ -88,8 +88,8 @@ const en: Copy = {
   },
   docTitle: '84softworks · Reliable B2B software',
   heroEyebrow: 'Reliable B2B software · Building since 2023',
-  heroline: 'I turn business problems into production software.',
-  lede: 'Andrei Baranov, Founder & CEO of 84softworks. Reliable B2B AI — architected end to end.',
+  heroline: 'I turn business problems into production software',
+  lede: 'Andrei Baranov, Founder & CEO of 84softworks. Reliable B2B AI — architected end to end',
   heroMetrics: [
     { value: '250K+', label: 'calls' },
     { value: '500K+', label: 'users' },
@@ -117,7 +117,7 @@ const en: Copy = {
   kill: {
     pre: 'The entire AI stack squeezed onto two consumer GPUs — ',
     bold: 'under $2,700',
-    post: ' of hardware. Enterprise-grade insight without enterprise hardware.'
+    post: ' of hardware. Enterprise-grade insight without enterprise hardware'
   },
   trackKicker: 'Track record',
   trackTitle: 'The numbers',
@@ -132,10 +132,10 @@ const en: Copy = {
     { label: 'Engineers on the team', value: '6' }
   ],
   joinKicker: 'Join',
-  joinTitle: 'Always open to exceptional people.',
+  joinTitle: 'Always open to exceptional people',
   joinBody:
     "Not actively hiring right now — but if you build software that holds and want to work with someone who's been through every layer, reach out.",
-  joinNote: 'I reply personally — usually within a day.',
+  joinNote: 'I reply personally — usually within a day',
   footerTagline: 'Building since 2023 · 84softworks.com',
   footerRights: '© 2026 84softworks'
 };
@@ -157,8 +157,8 @@ const ru: Copy = {
   },
   docTitle: '84softworks · Надёжный B2B-софт',
   heroEyebrow: 'Надёжный B2B-софт · строим с 2023',
-  heroline: 'Превращаю бизнес-задачи в продакшн-софт.',
-  lede: 'Андрей Баранов, Founder & CEO 84softworks. Надёжный B2B AI – продуман до последнего слоя.',
+  heroline: 'Превращаю бизнес-задачи в продакшн-софт',
+  lede: 'Андрей Баранов, Founder & CEO 84softworks. Надёжный B2B AI – продуман до последнего слоя',
   heroMetrics: [
     { value: '250K+', label: 'звонков' },
     { value: '500K+', label: 'пользователей' },
@@ -186,7 +186,7 @@ const ru: Copy = {
   kill: {
     pre: 'Весь AI-стек уместился в две потребительские GPU – ',
     bold: 'меньше $2 700',
-    post: ' железа. Корпоративная аналитика без корпоративного железа.'
+    post: ' железа. Корпоративная аналитика без корпоративного железа'
   },
   trackKicker: 'Опыт',
   trackTitle: 'Цифры',
@@ -201,10 +201,10 @@ const ru: Copy = {
     { label: 'Инженеров в команде', value: '6' }
   ],
   joinKicker: 'Команда',
-  joinTitle: 'Всегда открыт для сильных.',
+  joinTitle: 'Всегда открыт для сильных',
   joinBody:
     'Прямо сейчас активного найма нет – но если ты делаешь софт, который держит, и хочешь работать с тем, кто прошёл каждый слой стека, напиши.',
-  joinNote: 'Отвечаю лично – обычно в течение дня.',
+  joinNote: 'Отвечаю лично – обычно в течение дня',
   footerTagline: 'Строим с 2023 · 84softworks.com',
   footerRights: '© 2026 84softworks'
 };
