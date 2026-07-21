@@ -125,6 +125,7 @@
   font-family: var(--font);
   font-size: var(--fs-nav);
   line-height: 1;
+  white-space: nowrap; /* label must never wrap in the tight header row */
   text-decoration: none;
   color: var(--on-brand);
   background: transparent;
@@ -233,8 +234,10 @@ section {
   scroll-margin-top: calc(var(--navh) + var(--sp-16)); /* clear the fixed header on scroll-to */
 }
 
+/* No bottom padding: the following section's top padding is the sole separator, so the
+   hero statement doesn't read as bottom-heavy (a big void under the metrics). */
 .intro {
-  padding: 88px 0 var(--sp-64);
+  padding: 88px 0 0;
 }
 
 .heroline {
@@ -536,7 +539,9 @@ h2 {
 
 .gallery__frame img {
   max-width: 100%;
-  max-height: 82vh;
+  /* Cap by viewport height minus the top bar, thumbs and gaps so short screens (e.g. 720p)
+     keep the thumbnails on-screen; tall screens fall back to the 82vh presentation cap. */
+  max-height: min(82vh, calc(100vh - 190px));
   display: block;
 }
 
@@ -667,6 +672,15 @@ h2 {
   right: var(--sp-16);
   bottom: var(--sp-16);
   min-width: 0;
+}
+
+/* Dim scrim behind the bottom sheet so it reads as an intentional modal instead of a card
+   floating over whatever the page happened to be scrolled to. Sits just under the panel. */
+.contactmenu__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(10, 12, 20, 0.5);
 }
 
 .contactmenu__title {
@@ -805,7 +819,20 @@ footer a:hover {
 
 @media (max-width: 760px) {
   .wrap {
-    padding: 0 var(--sp-24);
+    padding: 0 var(--sp-16);
+  }
+  /* Compact header row: shrink the CTA and its gap so the logo + lang toggle + pill fit
+     one line on narrow phones (the pill was wrapping to two/three lines). */
+  .nav-actions {
+    gap: var(--sp-8);
+  }
+  .cta-pill {
+    padding: var(--sp-8) 14px;
+    font-size: 14px;
+  }
+  /* Hero statement sits higher on the short white panel so it isn't bottom-heavy. */
+  .intro {
+    padding: 48px 0 0;
   }
   /* Mobile: no morph/reveal — the band layers sit as an in-flow overlay and scroll off
      normally (the wordmark wraps, so pinning it into the header doesn't apply). */
@@ -830,8 +857,12 @@ footer a:hover {
   .brand-anchor {
     opacity: 1;
   }
+  /* The wordmark is a single unbreakable token, so it can't wrap to fit — size it by
+     viewport width instead of the desktop clamp (floor 64px overflowed narrow phones). */
   .wordmark {
     white-space: normal;
+    font-size: clamp(40px, 14vw, 96px);
+    letter-spacing: -0.03em;
   }
   .founder {
     grid-template-columns: 1fr;

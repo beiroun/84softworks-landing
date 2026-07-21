@@ -182,7 +182,14 @@ const ContactMenu = ({ variant }: ContactMenuProps) => {
       >
         {t.cta}
       </button>
-      {open && createPortal(panel, document.body)}
+      {open &&
+        createPortal(
+          <>
+            {sheet && <div className="contactmenu__scrim" aria-hidden="true" />}
+            {panel}
+          </>,
+          document.body
+        )}
     </div>
   );
 };
