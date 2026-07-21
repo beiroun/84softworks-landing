@@ -13,6 +13,9 @@ import ContactMenu from './ContactMenu';
 import HeroField from './HeroField';
 import { pickHeroVariant, HERO_VARIANTS } from './heroFieldEngine';
 import { EMAIL, socialLinks } from './contacts';
+import FlagshipTile from './FlagshipTile';
+import CaseGallery from './CaseGallery';
+import { flagshipCases } from './flagshipCases';
 
 const FOUNDER_PHOTO = '/founder.jpg';
 
@@ -21,6 +24,8 @@ const Home = () => {
   const { logo, navAnchor, navbar, bandFront, bandBg, eyebrow } = useHeaderMorph();
   // Pick one of the nine hero designs on load; the full-screen wordmark re-rolls it.
   const [heroVariant, setHeroVariant] = useState(pickHeroVariant);
+  // Which flagship case the gallery is showing (index into flagshipCases / pillars), or null.
+  const [openCase, setOpenCase] = useState<number | null>(null);
 
   // Shared by the wordmark and the eyebrow: at the top it shuffles the hero design,
   // once scrolled it returns to the top.
@@ -159,12 +164,14 @@ const Home = () => {
           <h2>{t.flagshipTitle}</h2>
           <p className="body">{t.flagshipIntro}</p>
           <div className="tiles">
-            {t.pillars.map((pillar) => (
-              <div className="tile" key={pillar.title}>
-                <div className="tile__ph" />
-                <h3>{pillar.title}</h3>
-                <p>{pillar.body}</p>
-              </div>
+            {t.pillars.map((pillar, index) => (
+              <FlagshipTile
+                key={pillar.title}
+                case_={flagshipCases[index]}
+                title={pillar.title}
+                body={pillar.body}
+                onOpen={() => setOpenCase(index)}
+              />
             ))}
           </div>
           <div className="kill">
@@ -230,6 +237,11 @@ const Home = () => {
         </div>
       </footer>
       </main>
+
+      <CaseGallery
+        case_={openCase !== null ? flagshipCases[openCase] : null}
+        onClose={() => setOpenCase(null)}
+      />
     </>
   );
 };

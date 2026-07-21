@@ -28,6 +28,7 @@ export const LangProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     document.documentElement.lang = lang;
+    document.title = dict[lang].docTitle;
   }, [lang]);
 
   const setLang = (next: Lang) => {

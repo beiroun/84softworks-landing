@@ -2,7 +2,8 @@
 import { useLang } from '../../i18n/LangContext';
 import type { Lang } from '../../i18n/dict';
 
-const options: Lang[] = ['en', 'ru'];
+// RU first — the audience and the product screenshots are Russian.
+const options: Lang[] = ['ru', 'en'];
 
 const LanguageToggle = () => {
   const { lang, setLang } = useLang();

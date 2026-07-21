@@ -45,6 +45,8 @@ export interface Copy {
   nav: NavLink[];
   cta: string;
   contact: ContactCopy;
+  /** Browser-tab <title>, per language. */
+  docTitle: string;
   heroEyebrow: string;
   heroline: string;
   lede: string;
@@ -84,6 +86,7 @@ const en: Copy = {
     gmail: 'Open in Gmail',
     mail: 'Mail client'
   },
+  docTitle: '84softworks · Reliable B2B software',
   heroEyebrow: 'Reliable B2B software · Building since 2023',
   heroline: 'I turn business problems into production software.',
   lede: 'Andrei Baranov, Founder & CEO of 84softworks. Reliable B2B AI — architected end to end.',
@@ -152,6 +155,7 @@ const ru: Copy = {
     gmail: 'Открыть в Gmail',
     mail: 'Почтовый клиент'
   },
+  docTitle: '84softworks · Надёжный B2B-софт',
   heroEyebrow: 'Надёжный B2B-софт · строим с 2023',
   heroline: 'Превращаю бизнес-задачи в продакшн-софт.',
   lede: 'Андрей Баранов, Founder & CEO 84softworks. Надёжный B2B AI – продуман до последнего слоя.',
