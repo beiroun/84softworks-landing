@@ -16,6 +16,7 @@ import { EMAIL, socialLinks } from './contacts';
 import FlagshipTile from './FlagshipTile';
 import CaseGallery from './CaseGallery';
 import { flagshipCases } from './flagshipCases';
+import { smoothScrollTo } from '../../smoothScroll';
 
 const FOUNDER_PHOTO = '/founder.jpg';
 
@@ -36,7 +37,7 @@ const Home = () => {
         return others[Math.floor(Math.random() * others.length)];
       });
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      smoothScrollTo(0);
     }
   };
 
@@ -51,7 +52,7 @@ const Home = () => {
   // Smooth-scroll to a section by script only — never write the hash to the URL,
   // so a reload doesn't jump straight to the last-clicked section.
   const scrollToSection = (href: string) => {
-    document.getElementById(href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' });
+    smoothScrollTo(href, -76); // land 76px above the target to clear the fixed header
   };
 
   return (

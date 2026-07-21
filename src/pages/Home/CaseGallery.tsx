@@ -48,7 +48,7 @@ const CaseGallery = ({ case_, onClose }: CaseGalleryProps) => {
 
   return createPortal(
     // Backdrop click dismisses; clicks on the inner content are stopped below.
-    <div className="gallery" role="dialog" aria-modal="true" aria-label={case_.name} onClick={onClose}>
+    <div className="gallery" role="dialog" aria-modal="true" aria-label={case_.name} onClick={onClose} data-lenis-prevent>
       <div className="gallery__inner" onClick={(event) => event.stopPropagation()}>
         <div className="gallery__top">
           <div className="gallery__title">
