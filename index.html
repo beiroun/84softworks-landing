@@ -16,9 +16,12 @@
   />
   <link rel="canonical" href="https://84softworks.com/" />
 
-  <!-- Favicons / app icons -->
+  <!-- Favicons / app icons. No SVG favicon on purpose: browsers render favicon SVGs in a
+       sandbox that doesn't load @font-face, so the Clash Display wordmark dropped out and only
+       the navy disc showed (the "blue ball" in Chrome/Edge); Safari rendered nothing at all.
+       The multi-res .ico carries the wordmark baked to raster for tabs; the PNGs cover
+       apple-touch and the PWA manifest. -->
   <link rel="icon" href="/favicon.ico" sizes="32x32" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
 
