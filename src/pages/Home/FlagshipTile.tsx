@@ -14,7 +14,7 @@ interface FlagshipTileProps {
 
 const FlagshipTile = ({ case_, title, body, onOpen }: FlagshipTileProps) => (
   <div className="tile">
-    <button type="button" className="tile__shot" onClick={onOpen} aria-label={`${title} — open screenshots`}>
+    <button type="button" className="tile__shot" onClick={onOpen} aria-label={`${title} – open screenshots`}>
       <img src={case_.hero} alt={title} />
       <span className="tile__badge" aria-hidden="true">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

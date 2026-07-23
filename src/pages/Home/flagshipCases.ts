@@ -31,7 +31,7 @@ export const flagshipCases: FlagshipCase[] = [
       { src: '/cases/sf-calls.png', view: 'Call analytics' },
       { src: '/cases/sf-analysis-call.png', view: 'AI analysis' },
       { src: '/cases/sf-chats.png', view: 'Chat analytics' },
-      { src: '/cases/sf-week-report.png', view: 'Ai report' }
+      { src: '/cases/sf-week-report.png', view: 'AI report' }
     ]
   },
   {

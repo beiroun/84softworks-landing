@@ -72,7 +72,7 @@ const CaseGallery = ({ case_, onClose }: CaseGalleryProps) => {
             </svg>
           </button>
           <div className="gallery__frame">
-            <img src={shot.src} alt={`${case_.name} — ${shot.view}`} />
+            <img src={shot.src} alt={`${case_.name} – ${shot.view}`} />
           </div>
           <button type="button" className="gallery__nav" onClick={() => step(1)} aria-label="Next screen">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

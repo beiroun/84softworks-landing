@@ -89,7 +89,7 @@ const en: Copy = {
   docTitle: '84softworks · Reliable B2B software',
   heroEyebrow: 'Reliable B2B software · Building since 2023',
   heroline: 'I turn business problems into production software',
-  lede: 'Andrei Baranov, Founder & CEO of 84softworks. Reliable B2B AI — architected end to end',
+  lede: 'Andrei Baranov, Founder & CEO of 84softworks. Reliable B2B AI – architected end to end',
   heroMetrics: [
     { value: '250K+', label: 'calls' },
     { value: '500K+', label: 'users' },
@@ -99,23 +99,23 @@ const en: Copy = {
   founderKicker: 'Founder & CEO',
   founderName: 'Andrei Baranov · beiroun',
   founderBio:
-    "A builder-leader who's been through every layer of the stack — backend, mobile, AI, infrastructure. I don't just write code; I turn business goals into products through architecture, team and process. As Head of Development I led a team of six and shipped eleven production products at scale: AI call analytics, high-load mobile apps, bare-metal Kubernetes. Now I'm building 84softworks — reliable B2B software that holds up in production.",
-  flagshipKicker: 'Flagship — case study',
+    "A builder-leader who's been through every layer of the stack – backend, mobile, AI, infrastructure. I don't just write code; I turn business goals into products through architecture, team and process. As Head of Development I led a team of six and shipped eleven production products at scale: AI call analytics, high-load mobile apps, bare-metal Kubernetes. Now I'm building 84softworks – reliable B2B software that holds up in production.",
+  flagshipKicker: 'Flagship – case study',
   flagshipTitle: 'FusionDynamics',
   flagshipIntro:
-    'An AI analytics and communications system I architected and built with my team — running in production, not in slides.',
+    'An AI analytics and communications system I architected and built with my team – running in production, not in slides.',
   pillars: [
     {
-      title: 'SenseFlow — AI analytics core',
-      body: 'Transcription, diarization, 24 marketing signals, a RAG assistant and automatic ticketing — a task router that parallelizes AI work, a computing environment for heavy analysis on cheap hardware, and a chat/voice environment.'
+      title: 'SenseFlow – AI analytics core',
+      body: 'Transcription, diarization, 24 marketing signals, a RAG assistant and automatic ticketing – a task router that parallelizes AI work, a computing environment for heavy analysis on cheap hardware, and a chat/voice environment.'
     },
     {
-      title: 'TLDR Messenger — in-house messaging',
-      body: 'A fully in-house messaging platform — operator and client apps, attachments, surveys, real-time delivery.'
+      title: 'TLDR Messenger – in-house messaging',
+      body: 'A fully in-house messaging platform – operator and client apps, attachments, surveys, real-time delivery.'
     }
   ],
   kill: {
-    pre: 'The entire AI stack squeezed onto two consumer GPUs — ',
+    pre: 'The entire AI stack squeezed onto two consumer GPUs – ',
     bold: 'under $2,700',
     post: ' of hardware. Enterprise-grade insight without enterprise hardware'
   },
@@ -134,8 +134,8 @@ const en: Copy = {
   joinKicker: 'Join',
   joinTitle: 'Always open to exceptional people',
   joinBody:
-    "Not actively hiring right now — but if you build software that holds and want to work with someone who's been through every layer, reach out.",
-  joinNote: 'I reply personally — usually within a day',
+    "Not actively hiring right now – but if you build software that holds and want to work with someone who's been through every layer, reach out.",
+  joinNote: 'I reply personally – usually within a day',
   footerTagline: 'Building since 2023 · 84softworks.com',
   footerRights: '© 2026 84softworks'
 };
@@ -176,7 +176,7 @@ const ru: Copy = {
   pillars: [
     {
       title: 'SenseFlow – ядро AI-аналитики',
-      body: 'Транскрибация, диаризация, 24 маркетинговых сигнала, RAG-ассистент и автосоздание заявок – роутер, что параллелит AI-задачи, вычислительное окружение для тяжёлого анализа на дешёвом железе, и чат-голосовое окружение.'
+      body: 'Транскрибация, диаризация, 24 маркетинговых сигнала, RAG-ассистент и автосоздание заявок – роутер, что параллелит AI-задачи, вычислительное окружение для тяжёлого анализа на дешёвом железе и чат-голосовое окружение.'
     },
     {
       title: 'TLDR Messenger – свой мессенджер',

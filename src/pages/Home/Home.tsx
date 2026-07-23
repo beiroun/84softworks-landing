@@ -109,7 +109,7 @@ const Home = () => {
               ref={logo}
               role="button"
               tabIndex={0}
-              aria-label="84softworks — shuffle hero background"
+              aria-label="84softworks – shuffle hero background"
               onClick={onWordmarkActivate}
               onKeyDown={onActivateKey}
             >
