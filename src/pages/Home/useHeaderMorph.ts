@@ -13,8 +13,10 @@
  * Header fill (--nav-alpha) is tied to the same morph progress.
  *
  * Geometry is measured from the DOM; transforms are written imperatively per rAF frame,
- * never through React state, to keep the morph off the render path. On mobile the morph
- * is disabled (the wordmark wraps) and only the header reveal-on-scroll runs.
+ * never through React state, to keep the morph off the render path. The wordmark morph runs at
+ * every width. The hide-on-scroll / reveal slide is desktop-only: on mobile the header stays
+ * pinned (sliding a backdrop-filtered fixed bar per frame is janky there), and the multi-link
+ * nav is dropped for the narrow row.
  */
 import { useEffect, useRef } from 'react';
 
@@ -87,7 +89,10 @@ export const useHeaderMorph = () => {
     };
 
     const updateDirection = (y: number) => {
-      if (y <= pinUntil) hideTarget = 0; // band still in play: header stays put
+      // Mobile: the header never hides. Animating a translateY slide on a backdrop-filtered
+      // fixed bar is janky on mobile (iOS Safari especially) — the blur repaints every frame of
+      // the slide, so it drags/pops in instead of appearing at once. Keep it pinned and static.
+      if (mobile || y <= pinUntil) hideTarget = 0; // band region on desktop keeps it put too
       else if (y > lastY + DIR_THRESHOLD) hideTarget = -navH; // scrolling down
       else if (y < lastY - DIR_THRESHOLD) hideTarget = 0; // scrolling up: reveal anywhere
       lastY = y;
@@ -106,15 +111,6 @@ export const useHeaderMorph = () => {
       const solidify = clamp01((p - SOLIDIFY_START) / (1 - SOLIDIFY_START));
       const eased = solidify * solidify * (3 - 2 * solidify);
       navEl.style.setProperty('--nav-alpha', String(GLASS_ALPHA + (1 - GLASS_ALPHA) * eased));
-
-      if (mobile) {
-        // No morph on mobile (the wordmark wraps); only the header reveal runs.
-        logoEl.style.transform = 'none';
-        navEl.style.transform = `translateY(${hideCurrent}px)`;
-        if (eyebrowEl) eyebrowEl.style.pointerEvents = ''; // no fade on mobile — keep it tappable
-        raf = requestAnimationFrame(frame);
-        return;
-      }
 
       // Eyebrow is a hero-only flourish: lift and fade it out early in the morph. Once it's
       // fully faded, drop pointer events so the invisible element can't swallow body clicks.

@@ -834,28 +834,10 @@ footer a:hover {
   .intro {
     padding: 48px 0 0;
   }
-  /* Mobile: no morph/reveal — the band layers sit as an in-flow overlay and scroll off
-     normally (the wordmark wraps, so pinning it into the header doesn't apply). */
-  .bandbg {
-    position: relative;
-    height: var(--band-h, auto);
-    padding-top: var(--navh);
-  }
-  .bandfront {
-    position: absolute;
-  }
-  .band-spacer {
-    display: none;
-  }
-  .page-body {
-    box-shadow: none;
-  }
+  /* Mobile keeps the desktop reveal/morph (fixed band layers, body rises to cover them,
+     wordmark docks into the header); only the multi-link nav is dropped for the narrow row. */
   .navlinks {
     display: none;
-  }
-  /* mobile: morph is disabled, so the anchor becomes a static small logo */
-  .brand-anchor {
-    opacity: 1;
   }
   /* The wordmark is a single unbreakable token, so it can't wrap to fit — size it by
      viewport width instead of the desktop clamp (floor 64px overflowed narrow phones). */
