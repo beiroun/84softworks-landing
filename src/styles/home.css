@@ -896,9 +896,18 @@ footer a:hover {
   }
   footer {
     margin-top: var(--sp-24); /* half-gap above the footer border */
-    /* Footer sits lower under its border, and the tall desktop tail (120px) is trimmed — it left
-       a big empty void at the bottom on mobile. */
-    padding: var(--sp-48) 0;
+    /* 24 under the border matches every other divider line; a slightly deeper 48 tail keeps the
+       copyright off the very bottom (the 120px desktop tail was too much of a void on mobile). */
+    padding: var(--sp-24) 0 var(--sp-48);
+  }
+
+  /* Block-to-grid gaps: drop the desktop 40px steps to the mobile 32px tier, so the whole page
+     rides just two levels — 24 (text ↔ text) and 32 (text ↔ block/grid). */
+  .metastrip,
+  .founder,
+  .tiles,
+  .mlist {
+    margin-top: 32px;
   }
 
   /* Metric rows: on the narrow column the long RU label and the figure each wrapped to two
