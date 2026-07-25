@@ -876,4 +876,43 @@ footer a:hover {
     width: 76px;
     height: 50px;
   }
+
+  /* The morph hook writes a per-frame translateX to slide the toggle from the left edge into
+     its docked slot; promote it so the slide stays smooth over the animated band. */
+  .langtoggle {
+    will-change: transform;
+  }
+
+  /* Uniform vertical rhythm on mobile: one common gap (--sp-48) between content groups. Where a
+     divider line sits (each section's hr, the footer border), split that gap in half above and
+     below the line — so the line is centered and the total stays one common gap — instead of the
+     old top+bottom paddings doubling up (content had drifted too far apart, and the footer border
+     ran flush against the last line). .intro keeps the full gap since it has no line above it. */
+  section {
+    padding: var(--sp-24) 0 0; /* half-gap above the hr; the next section's top is the sole gap */
+  }
+  .kicker {
+    margin-top: var(--sp-24); /* half-gap below the hr */
+  }
+  footer {
+    margin-top: var(--sp-24); /* half-gap above the footer border */
+    /* Footer sits lower under its border, and the tall desktop tail (120px) is trimmed — it left
+       a big empty void at the bottom on mobile. */
+    padding: var(--sp-48) 0;
+  }
+
+  /* Metric rows: on the narrow column the long RU label and the figure each wrapped to two
+     lines, and their baselines drifted apart at different type sizes (the "shifted numbers").
+     Stack them instead — grey label, then the figure on its own full-width line — so nothing
+     wraps mid-row and every figure lines up on the left. */
+  .mrow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-8);
+  }
+
+  .mrow__num {
+    font-size: 32px;
+    line-height: 1;
+  }
 }

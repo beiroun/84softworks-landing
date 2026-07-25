@@ -26,6 +26,10 @@ const DIR_THRESHOLD = 2; // px of scroll before a direction flip counts
 const GLASS_ALPHA = 0.0; // header tint while the band shows through — 0 so the navy animation
 // is actually visible (any navy tint over the navy band reads as flat navy = no glass at all)
 const SOLIDIFY_START = 0.6; // fraction of the morph after which the header fills to solid navy
+const LANG_MOVE_SPLIT = 1; // mobile: the lang toggle reaches its docked (right) slot exactly when
+// the wordmark docks (p=1). They don't collide — the wordmark rides straight up the left edge (its
+// hero and docked x both sit at the content's left margin) while the toggle traverses rightward, so
+// by the time the wordmark is high in the header the toggle is already well to the right.
 
 export const useHeaderMorph = () => {
   const logo = useRef<HTMLDivElement>(null);
@@ -34,6 +38,7 @@ export const useHeaderMorph = () => {
   const bandFront = useRef<HTMLDivElement>(null); // wordmark layer — also the band-height source
   const bandBg = useRef<HTMLDivElement>(null); // animated backdrop — physically covered by the rising body
   const eyebrow = useRef<HTMLDivElement>(null);
+  const langToggle = useRef<HTMLDivElement>(null); // mobile-only: slides left→right as the header morphs
 
   useEffect(() => {
     const logoEl = logo.current;
@@ -41,6 +46,7 @@ export const useHeaderMorph = () => {
     const navEl = navbar.current;
     const frontEl = bandFront.current;
     const eyebrowEl = eyebrow.current; // optional flourish; morph runs without it
+    const langEl = langToggle.current; // optional; drives the mobile lang-toggle slide
     if (!logoEl || !anchorEl || !navEl || !frontEl) return;
 
     // Measured geometry — viewport coords, since the band layers are fixed.
@@ -54,6 +60,7 @@ export const useHeaderMorph = () => {
     let pinUntil = MORPH_MIN; // scroll at which the body has fully covered the band
     let navH = 60;
     let mobile = false;
+    let langOffset = 0; // px from the toggle's docked (right) slot to the content's left edge — negative
 
     let lastY = window.scrollY;
     let hideTarget = 0; // 0 = header shown, -navH = hidden
@@ -86,6 +93,14 @@ export const useHeaderMorph = () => {
       // leaving no gap between "wordmark arrived" and "band gone".
       morphDistance = Math.max(MORPH_MIN, bandHeight - navH);
       pinUntil = morphDistance;
+
+      // Mobile lang toggle: at the top it pins to the content's left edge, then slides back into
+      // its docked (right) slot as the header morphs. Measure the delta from that docked slot to
+      // the left edge (the invisible brand-anchor sits exactly on that edge).
+      if (langEl) {
+        langEl.style.transform = 'none';
+        langOffset = anchorRect.left - langEl.getBoundingClientRect().left;
+      }
     };
 
     const updateDirection = (y: number) => {
@@ -121,6 +136,18 @@ export const useHeaderMorph = () => {
         eyebrowEl.style.pointerEvents = ep >= 1 ? 'none' : 'auto';
       }
 
+      // Mobile: slide the lang toggle from the content's left edge (top of page) into its docked
+      // right slot, finishing by LANG_MOVE_SPLIT so it has cleared the top-left corner well before
+      // the wordmark docks there — the two never overlap. Desktop keeps the toggle in its flow slot.
+      if (langEl) {
+        if (mobile) {
+          const langP = clamp01(p / LANG_MOVE_SPLIT);
+          langEl.style.transform = `translateX(${(1 - langP) * langOffset}px)`;
+        } else if (langEl.style.transform) {
+          langEl.style.transform = '';
+        }
+      }
+
       // Fixed layers, so no scroll compensation — interpolate straight toward the header slot.
       const translateY = p * (navViewTop - heroTop) + hideCurrent;
       const translateX = p * (navViewLeft - heroLeft);
@@ -144,6 +171,7 @@ export const useHeaderMorph = () => {
       navEl.style.transform = '';
       navEl.style.removeProperty('--nav-alpha');
       document.documentElement.style.removeProperty('--band-h');
+      if (langEl) langEl.style.transform = '';
       if (eyebrowEl) {
         eyebrowEl.style.opacity = '';
         eyebrowEl.style.transform = '';
@@ -152,5 +180,5 @@ export const useHeaderMorph = () => {
     };
   }, []);
 
-  return { logo, navAnchor, navbar, bandFront, bandBg, eyebrow };
+  return { logo, navAnchor, navbar, bandFront, bandBg, eyebrow, langToggle };
 };

@@ -19,15 +19,19 @@
   <!-- Favicons / app icons. No SVG favicon on purpose: browsers render favicon SVGs in a
        sandbox that doesn't load @font-face, so the Clash Display wordmark dropped out and only
        the navy disc showed (the "blue ball" in Chrome/Edge); Safari rendered nothing at all.
-       Firefox is finicky with a PNG-compressed .ico pinned to a single sizes= (the tab icon
-       dropped out), so raster PNG 16/32 lead for the tab, the multi-res .ico stays as the
-       universal fallback (Safari, legacy), and apple-touch + manifest cover mobile/PWA.
-       All raster icons are flattened onto opaque navy: Safari whitens transparent PNG/ICO
-       corners and rounds them (a white-backed circle on macOS, no icon at all on iOS), so no
-       alpha is left in any frame. -->
+       favicon.ico is BMP/DIB-encoded, NOT PNG-compressed: Safari's ICO decoder can't read
+       PNG-in-ICO frames, so the previous PNG-compressed .ico rendered everywhere except Safari,
+       which fell back to no icon at all. Raster PNG 16/32 lead the tab for Chrome/Edge/Firefox,
+       the BMP .ico (16/32/48) is the universal + Safari-safe fallback, and apple-touch + manifest
+       cover mobile/PWA. All raster icons are flattened onto opaque navy: Safari whitens transparent
+       PNG/ICO corners and rounds them (a white-backed circle on macOS, no icon at all on iOS), so
+       no alpha is left in any frame.
+       Note: Safari caches favicons per-origin very aggressively — an already-visited device may
+       keep showing the old (broken) state until its website data is cleared or a Private tab is
+       used; that is a client cache, not this markup. -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
 

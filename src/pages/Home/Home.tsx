@@ -22,7 +22,7 @@ const FOUNDER_PHOTO = '/founder.jpg';
 
 const Home = () => {
   const { t } = useLang();
-  const { logo, navAnchor, navbar, bandFront, bandBg, eyebrow } = useHeaderMorph();
+  const { logo, navAnchor, navbar, bandFront, bandBg, eyebrow, langToggle } = useHeaderMorph();
   // Pick one of the nine hero designs on load; the full-screen wordmark re-rolls it.
   const [heroVariant, setHeroVariant] = useState(pickHeroVariant);
   // Which flagship case the gallery is showing (index into flagshipCases / pillars), or null.
@@ -78,7 +78,7 @@ const Home = () => {
             ))}
           </nav>
           <div className="nav-actions">
-            <LanguageToggle />
+            <LanguageToggle ref={langToggle} />
             <ContactMenu variant="pill" />
           </div>
         </div>
