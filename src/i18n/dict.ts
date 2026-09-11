@@ -59,6 +59,12 @@ export interface Copy {
   flagshipIntro: string;
   pillars: Pillar[];
   kill: Kill;
+  upcomingKicker: string;
+  upcomingTitle: string;
+  upcomingIntro: string;
+  upcomingPillars: Pillar[];
+  /** Status line under the tiles; reuses the Kill shape for the accented ending. */
+  upcomingStatus: Kill;
   trackKicker: string;
   trackTitle: string;
   trackBody: string;
@@ -75,6 +81,7 @@ const en: Copy = {
   nav: [
     { href: '#founder', label: 'Founder' },
     { href: '#flagship', label: 'Flagship' },
+    { href: '#upcoming', label: 'In the works' },
     { href: '#track', label: 'Track record' },
     { href: '#join', label: 'Join' }
   ],
@@ -119,6 +126,33 @@ const en: Copy = {
     bold: 'under $2,700',
     post: ' of hardware. Enterprise-grade insight without enterprise hardware'
   },
+  upcomingKicker: 'In development',
+  upcomingTitle: 'ThunderVox',
+  upcomingIntro:
+    'A SIP platform for devices at physical endpoints – intercom panels, elevators, panic buttons, SOS points. An 84softworks own product, in active development.',
+  upcomingPillars: [
+    {
+      title: 'Push-wait at the core',
+      body: "A call from the panel must reach a phone that's asleep. That pain comes from real large-scale production, and it sits at the core rather than in a bolted-on module: a push wakes the app, the call is parked and resumed the moment it registers. Bring any push provider – integration is a thin contract – we never store your keys on our server."
+    },
+    {
+      title: 'Scale of a different class',
+      body: 'The solution grew out of a live deployment: 5,000 active registrations on top of a directory of 500,000 internal numbers – and the core is designed for far more, toward 100K active connections and millions of numbers. A different class of problem than contact-center PBXes: here an offline subscriber is a row in the directory, not load.'
+    },
+    {
+      title: 'Media behind NAT + video',
+      body: 'Panel behind a router, phone on mobile data – two-way audio and panel video, no one-way silence. Kamailio signaling with an independently scalable media layer.'
+    },
+    {
+      title: 'Vendor quirks, built in',
+      body: 'Every panel vendor speaks its own dialect of SIP. Hardware-specific adapters ship in the box – not as «finish it yourself».'
+    }
+  ],
+  upcomingStatus: {
+    pre: 'The core is written and tested against a real production setup. ',
+    bold: 'Screenshots and demo on the way',
+    post: '.'
+  },
   trackKicker: 'Track record',
   trackTitle: 'The numbers',
   trackBody:
@@ -144,6 +178,7 @@ const ru: Copy = {
   nav: [
     { href: '#founder', label: 'Фаундер' },
     { href: '#flagship', label: 'Флагман' },
+    { href: '#upcoming', label: 'В разработке' },
     { href: '#track', label: 'Опыт' },
     { href: '#join', label: 'Команда' }
   ],
@@ -187,6 +222,33 @@ const ru: Copy = {
     pre: 'Весь AI-стек уместился в две потребительские GPU – ',
     bold: 'меньше $2 700',
     post: ' железа. Корпоративная аналитика без корпоративного железа'
+  },
+  upcomingKicker: 'В разработке',
+  upcomingTitle: 'ThunderVox',
+  upcomingIntro:
+    'SIP-платформа для устройств на физических точках – домофоны, лифты, тревожные кнопки, SOS-колонны. Собственный продукт 84softworks, в активной разработке.',
+  upcomingPillars: [
+    {
+      title: 'Push-wait – в основе',
+      body: 'Вызов с панели должен дойти до телефона, который спит. Это боль реального большого продакшена, и она лежит в основе ядра, а не в модуле сверху: пуш будит приложение, вызов паркуется и возобновляется в момент регистрации. Провайдер пушей – любой ваш: интеграция по тонкому контракту, мы не храним ключи на нашем сервере.'
+    },
+    {
+      title: 'Масштаб другого класса',
+      body: 'Решение выросло из живого контура: 5 000 активных регистраций поверх базы в 500 000 внутренних номеров – и ядро проектируется под кратно большее, к 100K активных подключений и миллионам номеров. Это другой класс задачи, чем АТС контакт-центров: оффлайн-абонент здесь – строка в справочнике, а не нагрузка.'
+    },
+    {
+      title: 'Медиа за NAT + видео',
+      body: 'Панель за роутером, телефон в мобильной сети – звук в обе стороны и видео с панели, без «тишины в одну сторону». Kamailio-сигнализация и отдельно масштабируемый медиа-слой.'
+    },
+    {
+      title: 'Вендорская специфика из коробки',
+      body: 'У каждого производителя панелей свои кривости в SIP. Адаптеры под конкретное железо – встроены, а не «допилите сами».'
+    }
+  ],
+  upcomingStatus: {
+    pre: 'Ядро написано и протестировано на реальном контуре. ',
+    bold: 'Ожидайте скриншоты и демо',
+    post: '.'
   },
   trackKicker: 'Опыт',
   trackTitle: 'Цифры',

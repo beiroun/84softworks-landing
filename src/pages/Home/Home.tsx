@@ -191,6 +191,29 @@ const Home = () => {
         </div>
       </section>
 
+      <section id="upcoming">
+        <div className="wrap">
+          <hr className="hr" />
+          <div className="kicker">{t.upcomingKicker}</div>
+          <h2>{t.upcomingTitle}</h2>
+          <p className="body">{t.upcomingIntro}</p>
+          {/* Text-only tiles: no screenshots yet — the gallery hookup comes with the first screens. */}
+          <div className="tiles tiles--text">
+            {t.upcomingPillars.map((pillar) => (
+              <div className="tile" key={pillar.title}>
+                <h3>{pillar.title}</h3>
+                <p>{pillar.body}</p>
+              </div>
+            ))}
+          </div>
+          <div className="kill">
+            {t.upcomingStatus.pre}
+            <b>{t.upcomingStatus.bold}</b>
+            {t.upcomingStatus.post}
+          </div>
+        </div>
+      </section>
+
       <section id="track">
         <div className="wrap">
           <hr className="hr" />

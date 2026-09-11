@@ -2,16 +2,18 @@
  * Scroll spy for the header nav — reports which page section the viewport is in,
  * so the nav's active dot tracks the real scroll position instead of a hardcoded item.
  *
- * A section counts as "current" once its top crosses the activation line just below
- * the fixed header; the last one to have crossed wins. Above the first section (hero)
- * nothing is active. The last section is forced active at the document's very bottom,
- * because a short final section may never reach the activation line.
+ * A section counts as "current" once it fills roughly the bottom third of the viewport —
+ * the reader has started it, even though the previous section is still on screen; the
+ * last one to have crossed wins. Above the first section (hero) nothing is active. The
+ * last section is forced active at the document's very bottom, because a short final
+ * section may never reach the activation line.
  */
 import { useEffect, useState } from 'react';
 
-// Must stay >= the |offset| used by scrollToSection (76px above target), or a nav click
-// would land a section exactly on the line without activating its own dot.
-const ACTIVATION_OFFSET = 80;
+// A section activates when its top rises above this fraction of the viewport height
+// (i.e. it occupies the bottom third). The line sits far below the 76px nav-click
+// landing offset, so a clicked section always activates its own dot.
+const ACTIVATION_LINE_FRACTION = 2 / 3;
 const BOTTOM_EPSILON = 2; // px of slack for fractional scroll positions at the page end
 
 export const useScrollSpy = (sectionHrefs: string[]): string | null => {
@@ -29,10 +31,11 @@ export const useScrollSpy = (sectionHrefs: string[]): string | null => {
         setActiveHref(sectionHrefs[sectionHrefs.length - 1] ?? null);
         return;
       }
+      const activationLine = window.innerHeight * ACTIVATION_LINE_FRACTION;
       let current: string | null = null;
       for (const href of sectionHrefs) {
         const section = document.querySelector<HTMLElement>(href);
-        if (section && section.getBoundingClientRect().top <= ACTIVATION_OFFSET) {
+        if (section && section.getBoundingClientRect().top <= activationLine) {
           current = href;
         }
       }
