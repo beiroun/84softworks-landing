@@ -5,14 +5,15 @@
  * and contacts. Copy comes from the i18n dictionary; the header animation lives in
  * useHeaderMorph.
  */
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useLang } from '../../i18n/LangContext';
 import { useHeaderMorph } from './useHeaderMorph';
+import { useScrollSpy } from './useScrollSpy';
 import LanguageToggle from './LanguageToggle';
 import ContactMenu from './ContactMenu';
 import HeroField from './HeroField';
 import { pickHeroVariant, HERO_VARIANTS } from './heroFieldEngine';
-import { EMAIL, socialLinks } from './contacts';
+import { EMAIL, contactLinkRows } from './contacts';
 import FlagshipTile from './FlagshipTile';
 import CaseGallery from './CaseGallery';
 import { flagshipCases } from './flagshipCases';
@@ -23,6 +24,9 @@ const FOUNDER_PHOTO = '/founder.jpg';
 const Home = () => {
   const { t } = useLang();
   const { logo, navAnchor, navbar, bandFront, bandBg, eyebrow, langToggle } = useHeaderMorph();
+  // Section hrefs are language-invariant; memo keeps the scroll-spy subscription stable.
+  const sectionHrefs = useMemo(() => t.nav.map((link) => link.href), [t.nav]);
+  const activeHref = useScrollSpy(sectionHrefs);
   // Pick one of the nine hero designs on load; the full-screen wordmark re-rolls it.
   const [heroVariant, setHeroVariant] = useState(pickHeroVariant);
   // Which flagship case the gallery is showing (index into flagshipCases / pillars), or null.
@@ -63,11 +67,11 @@ const Home = () => {
             84softworks
           </div>
           <nav className="navlinks">
-            {t.nav.map((link, index) => (
+            {t.nav.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className={index === 0 ? 'is-active' : undefined}
+                className={link.href === activeHref ? 'is-active' : undefined}
                 onClick={(event) => {
                   event.preventDefault();
                   scrollToSection(link.href);
@@ -147,10 +151,14 @@ const Home = () => {
               <div className="name">{t.founderName}</div>
               <p className="body body--tight">{t.founderBio}</p>
               <div className="socials">
-                {socialLinks.map((social) => (
-                  <a key={social.label} href={social.href} target="_blank" rel="noreferrer">
-                    {social.label}
-                  </a>
+                {contactLinkRows.map((row) => (
+                  <div className="socials__row" key={row[0].label}>
+                    {row.map((social) => (
+                      <a key={social.label} href={social.href} target="_blank" rel="noreferrer">
+                        {social.label}
+                      </a>
+                    ))}
+                  </div>
                 ))}
               </div>
             </div>
@@ -223,13 +231,17 @@ const Home = () => {
             </div>
             <div className="footer__col">
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-              <br />
-              {socialLinks.map((social, index) => (
-                <span key={social.label}>
-                  {index > 0 && ' · '}
-                  <a href={social.href} target="_blank" rel="noreferrer">
-                    {social.label}
-                  </a>
+              {contactLinkRows.map((row) => (
+                <span key={row[0].label}>
+                  <br />
+                  {row.map((social, index) => (
+                    <span key={social.label}>
+                      {index > 0 && ' · '}
+                      <a href={social.href} target="_blank" rel="noreferrer">
+                        {social.label}
+                      </a>
+                    </span>
+                  ))}
                 </span>
               ))}
             </div>

@@ -16,23 +16,20 @@
   />
   <link rel="canonical" href="https://84softworks.com/" />
 
-  <!-- Favicons / app icons. No SVG favicon on purpose: browsers render favicon SVGs in a
-       sandbox that doesn't load @font-face, so the Clash Display wordmark dropped out and only
-       the navy disc showed (the "blue ball" in Chrome/Edge); Safari rendered nothing at all.
-       favicon.ico is BMP/DIB-encoded, NOT PNG-compressed: Safari's ICO decoder can't read
-       PNG-in-ICO frames, so the previous PNG-compressed .ico rendered everywhere except Safari,
-       which fell back to no icon at all. Raster PNG 16/32 lead the tab for Chrome/Edge/Firefox,
-       the BMP .ico (16/32/48) is the universal + Safari-safe fallback, and apple-touch + manifest
-       cover mobile/PWA. All raster icons are flattened onto opaque navy: Safari whitens transparent
-       PNG/ICO corners and rounds them (a white-backed circle on macOS, no icon at all on iOS), so
-       no alpha is left in any frame.
-       Note: Safari caches favicons per-origin very aggressively — an already-visited device may
-       keep showing the old (broken) state until its website data is cleared or a Private tab is
-       used; that is a client cache, not this markup. -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <!-- Favicons / app icons. One round icon everywhere (no per-browser JS): a navy disc inside a
+       bright orange ring, transparent corners. The orange ring lifts the icon's contrast so Safari
+       (16.4+) doesn't paint its white "low-contrast" card behind the dark navy mark — the reason a
+       plain navy icon showed a white box in Safari only. favicon.ico is BMP/DIB-encoded (16/32/48),
+       NOT PNG-in-ICO, which Safari's ICO decoder can't read. The 96×96 PNG is what Google Search
+       picks up (Google wants a favicon larger than 48px; the 16/32 were too small → generic globe).
+       apple-touch stays an opaque square that iOS masks to a squircle (transparent corners would
+       fill black there). ?v= busts Safari/Firefox's very sticky favicon cache when the art changes –
+       bump it on the next icon edit. -->
+  <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
   <link rel="manifest" href="/site.webmanifest" />
 
   <!-- Open Graph -->
@@ -53,6 +50,29 @@
   <meta name="twitter:title" content="84softworks" />
   <meta name="twitter:description" content="Engineering studio building reliable B2B AI." />
   <meta name="twitter:image" content="https://84softworks.com/og-image.png" />
+
+  <!-- Structured data. WebSite.name is the primary signal Google uses to render the site-name line
+       above the title in search results; without it Google falls back to the bare domain
+       ("84softworks.com") even though og:site_name / title already say "84softworks". Organization
+       reinforces the brand + logo association for the knowledge panel. Domain-level and cached —
+       updates only on re-crawl, not instantly. -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "84softworks",
+      "url": "https://84softworks.com/"
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "84softworks",
+      "url": "https://84softworks.com/",
+      "logo": "https://84softworks.com/favicon-96x96.png"
+    }
+  </script>
 
   <title>84softworks · Reliable B2B software</title>
 </head>

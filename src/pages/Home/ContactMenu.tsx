@@ -11,7 +11,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLang } from '../../i18n/LangContext';
-import { EMAIL, socialLinks, gmailComposeUrl } from './contacts';
+import { EMAIL, contactLinkRows, gmailComposeUrl } from './contacts';
 
 /** 'pill' = outlined trigger in the navy header · 'fill' = solid trigger in the Join block. */
 type Variant = 'pill' | 'fill';
@@ -161,10 +161,14 @@ const ContactMenu = ({ variant }: ContactMenuProps) => {
       <div className="contactmenu__sep" />
 
       <div className="contactmenu__socials">
-        {socialLinks.map((social) => (
-          <a key={social.label} href={social.href} target="_blank" rel="noreferrer" role="menuitem">
-            {social.label}
-          </a>
+        {contactLinkRows.map((row) => (
+          <div className="contactmenu__socials-row" key={row[0].label}>
+            {row.map((social) => (
+              <a key={social.label} href={social.href} target="_blank" rel="noreferrer" role="menuitem">
+                {social.label}
+              </a>
+            ))}
+          </div>
         ))}
       </div>
     </div>

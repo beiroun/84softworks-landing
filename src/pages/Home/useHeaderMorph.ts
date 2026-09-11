@@ -26,10 +26,9 @@ const DIR_THRESHOLD = 2; // px of scroll before a direction flip counts
 const GLASS_ALPHA = 0.0; // header tint while the band shows through — 0 so the navy animation
 // is actually visible (any navy tint over the navy band reads as flat navy = no glass at all)
 const SOLIDIFY_START = 0.6; // fraction of the morph after which the header fills to solid navy
-const LANG_MOVE_SPLIT = 1; // mobile: the lang toggle reaches its docked (right) slot exactly when
-// the wordmark docks (p=1). They don't collide — the wordmark rides straight up the left edge (its
-// hero and docked x both sit at the content's left margin) while the toggle traverses rightward, so
-// by the time the wordmark is high in the header the toggle is already well to the right.
+const LANG_MOVE_SPLIT = 1; // mobile: the lang toggle reaches its docked (right) slot slightly
+// ahead of the wordmark (which docks at p=1) — a small head start that clears the faint overlap the
+// two had on narrow phones, without the toggle darting away so early it reads as a separate move.
 
 export const useHeaderMorph = () => {
   const logo = useRef<HTMLDivElement>(null);

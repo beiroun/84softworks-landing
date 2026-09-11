@@ -329,8 +329,15 @@ h2 {
 
 .socials {
   display: flex;
-  gap: var(--sp-24);
+  flex-direction: column;
+  gap: var(--sp-12);
   margin-top: 32px;
+}
+
+.socials__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-24);
 }
 
 .socials a {
@@ -775,9 +782,15 @@ h2 {
 
 .contactmenu__socials {
   display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+  padding-top: var(--sp-4);
+}
+
+.contactmenu__socials-row {
+  display: flex;
   flex-wrap: wrap;
   gap: var(--sp-16);
-  padding-top: var(--sp-4);
 }
 
 .contactmenu__socials a {
