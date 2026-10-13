@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
  * Hero background field — the animated navy-band backdrop. One canvas engine with
  * nine variants across three families (dot-grid, waveform, node-network); the site

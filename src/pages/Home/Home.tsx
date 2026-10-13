@@ -1,8 +1,9 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
  * Organization landing home page — the 84softworks org business card.
  * Single static page (no backend): brand top-band with a scroll-morphing wordmark,
- * founder-first editorial body, flagship case study, track-record metrics, hiring
- * and contacts. Copy comes from the i18n dictionary; the header animation lives in
+ * founder-first editorial body, flagship case study, the own product, track-record
+ * metrics, hiring and contacts. Copy comes from the i18n dictionary; the header animation lives in
  * useHeaderMorph.
  */
 import { useMemo, useState } from 'react';
@@ -14,9 +15,9 @@ import ContactMenu from './ContactMenu';
 import HeroField from './HeroField';
 import { pickHeroVariant, HERO_VARIANTS } from './heroFieldEngine';
 import { EMAIL, contactLinkRows } from './contacts';
-import FlagshipTile from './FlagshipTile';
+import ProductTile from './ProductTile';
 import CaseGallery from './CaseGallery';
-import { flagshipCases } from './flagshipCases';
+import { flagshipCases, thundervoxCases, type ProductCase } from './productCases';
 import { smoothScrollTo } from '../../smoothScroll';
 
 const FOUNDER_PHOTO = '/founder.jpg';
@@ -29,8 +30,8 @@ const Home = () => {
   const activeHref = useScrollSpy(sectionHrefs);
   // Pick one of the nine hero designs on load; the full-screen wordmark re-rolls it.
   const [heroVariant, setHeroVariant] = useState(pickHeroVariant);
-  // Which flagship case the gallery is showing (index into flagshipCases / pillars), or null.
-  const [openCase, setOpenCase] = useState<number | null>(null);
+  // The product case the gallery is showing (flagship or ThunderVox), or null while closed.
+  const [openCase, setOpenCase] = useState<ProductCase | null>(null);
 
   // Shared by the wordmark and the eyebrow: at the top it shuffles the hero design,
   // once scrolled it returns to the top.
@@ -174,12 +175,12 @@ const Home = () => {
           <p className="body">{t.flagshipIntro}</p>
           <div className="tiles">
             {t.pillars.map((pillar, index) => (
-              <FlagshipTile
+              <ProductTile
                 key={pillar.title}
                 case_={flagshipCases[index]}
                 title={pillar.title}
                 body={pillar.body}
-                onOpen={() => setOpenCase(index)}
+                onOpen={() => setOpenCase(flagshipCases[index])}
               />
             ))}
           </div>
@@ -197,7 +198,18 @@ const Home = () => {
           <div className="kicker">{t.upcomingKicker}</div>
           <h2>{t.upcomingTitle}</h2>
           <p className="body">{t.upcomingIntro}</p>
-          {/* Text-only tiles: no screenshots yet — the gallery hookup comes with the first screens. */}
+          <div className="tiles">
+            {t.upcomingShots.map((shot, index) => (
+              <ProductTile
+                key={shot.title}
+                case_={thundervoxCases[index]}
+                title={shot.title}
+                body={shot.body}
+                onOpen={() => setOpenCase(thundervoxCases[index])}
+              />
+            ))}
+          </div>
+          {/* Positioning tiles stay text-only: they describe the core, which has no screen to show. */}
           <div className="tiles tiles--text">
             {t.upcomingPillars.map((pillar) => (
               <div className="tile" key={pillar.title}>
@@ -210,6 +222,13 @@ const Home = () => {
             {t.upcomingStatus.pre}
             <b>{t.upcomingStatus.bold}</b>
             {t.upcomingStatus.post}
+          </div>
+          <div className="product-links">
+            {t.upcomingLinks.map((link) => (
+              <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       </section>
@@ -274,10 +293,7 @@ const Home = () => {
       </footer>
       </main>
 
-      <CaseGallery
-        case_={openCase !== null ? flagshipCases[openCase] : null}
-        onClose={() => setOpenCase(null)}
-      />
+      <CaseGallery case_={openCase} onClose={() => setOpenCase(null)} />
     </>
   );
 };

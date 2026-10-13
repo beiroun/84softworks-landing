@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
  * Global smooth scroll (Lenis).
  *

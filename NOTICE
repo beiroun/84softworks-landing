@@ -1,0 +1,45 @@
+84softworks Landing - third-party components and brand assets
+==============================================================
+
+The source code in the beiroun/84softworks-landing repository is proprietary:
+copyright (c) 2026 Andrei Baranov (84softworks), all rights reserved, published
+for reference only (see LICENSE). It builds on third-party software and fonts
+that keep their own licenses. Nothing in LICENSE changes the terms under which
+these components are provided.
+
+Component                Used in                License (verify against the pinned version)
+-----------------------  ---------------------  ---------------------------------------------
+Node.js                  build                  MIT
+TypeScript               build                  Apache-2.0
+Vite                     build                  MIT
+ESLint, Prettier         build                  MIT
+React, react-dom         site                   MIT
+React Router             site                   MIT
+Lenis                    site (smooth scroll)   MIT
+Onest (font)             site (body text)       SIL Open Font License 1.1
+Clash Display (font)     site (wordmarks)       ITF Free Font License (Fontshare)
+
+The npm packages are not vendored: their exact versions are pinned in
+package-lock.json and their licenses are available from the upstream projects.
+
+Fonts
+-----
+
+Onest - Copyright 2021 The Onest Project Authors
+(https://github.com/googlefonts/onest), SIL Open Font License 1.1. The Latin,
+Latin-extended and Cyrillic subsets in public/fonts/ are Modified Versions in
+the sense of the OFL; the license text is in public/fonts/OFL-Onest.txt.
+
+Clash Display - (c) Indian Type Foundry, distributed by Fontshare under the ITF
+Free Font License. The copy in public/fonts/ is served by the 84softworks
+website under that license's self-hosting permission; it may not be reused or
+redistributed from here. Get your own copy at
+https://www.fontshare.com/fonts/clash-display.
+
+Brand assets and trademarks
+---------------------------
+
+The 84softworks name and marks (the "84" sign, the wordmarks, the icon set and
+og-image.png), the founder photo (public/founder.jpg) and the product
+screenshots (public/cases/) identify 84softworks and its products. They may not
+be used without written permission from the copyright holder.

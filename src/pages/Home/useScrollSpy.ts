@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
  * Scroll spy for the header nav — reports which page section the viewport is in,
  * so the nav's active dot tracks the real scroll position instead of a hardcoded item.

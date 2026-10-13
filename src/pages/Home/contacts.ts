@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
  * Language-invariant contact data — shared by the founder section, the footer
  * and the ContactMenu popover. Labels and hrefs are the same in every language.

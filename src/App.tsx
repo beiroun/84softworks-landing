@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import router from './routes';

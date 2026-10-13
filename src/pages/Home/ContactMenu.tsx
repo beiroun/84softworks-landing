@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
  * Contact call-to-action: a trigger button that opens a popover with email actions
  * (copy address / Gmail compose / mail client) and social links. Replaces bare

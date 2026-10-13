@@ -1,3 +1,5 @@
+/* Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE. */
+
 /** 84softworks landing — section and component styles. Token-driven; see tokens.css. */
 
 .wrap {
@@ -361,9 +363,31 @@ h2 {
   margin-top: 40px;
 }
 
-/* Text-only tiles (the in-development section has no screenshots yet). */
+/* Text-only tiles (the positioning row of the product section has nothing to screenshot). */
 .tiles--text .tile h3 {
   margin-top: 0; /* no screenshot above to space away from */
+}
+
+/* Where the product lives in public (source, licence): a row of links under the status line,
+   styled like the founder's social links. */
+.product-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-24);
+  margin-top: var(--sp-24);
+}
+
+.product-links a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: var(--fs-nav);
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 3px;
+}
+
+.product-links a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* Click-through screenshot that opens the case gallery. Flat like the founder photo —

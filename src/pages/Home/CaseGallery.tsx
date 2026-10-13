@@ -1,16 +1,17 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
- * Case-study gallery: a fullscreen lightbox over the flagship section. Opened from a
- * FlagshipTile, it pages through that product's screenshots with arrows, thumbnails and
+ * Case-study gallery: a fullscreen lightbox over a product section. Opened from a
+ * ProductTile, it pages through that product's screenshots with arrows, thumbnails and
  * the keyboard (←/→/Esc). Portaled to <body> so it clears the fixed header and the
  * morphing wordmark's stacking context — the same reason ContactMenu portals its popover.
  */
 import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { FlagshipCase } from './flagshipCases';
+import type { ProductCase } from './productCases';
 
 interface CaseGalleryProps {
   /** the open case, or null when the gallery is closed */
-  case_: FlagshipCase | null;
+  case_: ProductCase | null;
   onClose: () => void;
 }
 

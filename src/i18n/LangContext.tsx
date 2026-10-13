@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
  * Language context: holds the active language, persists the choice, and exposes
  * the resolved copy. Base language is the client locale (ru-* → Russian), unless

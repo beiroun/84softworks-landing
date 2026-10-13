@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
  * Landing copy dictionary (EN + RU). Single source for all display strings.
  * Language-invariant tokens (wordmark, social labels, hrefs, raw metric numbers)
@@ -62,9 +63,13 @@ export interface Copy {
   upcomingKicker: string;
   upcomingTitle: string;
   upcomingIntro: string;
+  /** Screenshot tiles (console, integration); the image resources live in productCases.ts. */
+  upcomingShots: Pillar[];
   upcomingPillars: Pillar[];
   /** Status line under the tiles; reuses the Kill shape for the accented ending. */
   upcomingStatus: Kill;
+  /** Where the product lives in public: source and licence. */
+  upcomingLinks: NavLink[];
   trackKicker: string;
   trackTitle: string;
   trackBody: string;
@@ -81,7 +86,7 @@ const en: Copy = {
   nav: [
     { href: '#founder', label: 'Founder' },
     { href: '#flagship', label: 'Flagship' },
-    { href: '#upcoming', label: 'In the works' },
+    { href: '#upcoming', label: 'Products' },
     { href: '#track', label: 'Track record' },
     { href: '#join', label: 'Join' }
   ],
@@ -126,10 +131,20 @@ const en: Copy = {
     bold: 'under $2,700',
     post: ' of hardware. Enterprise-grade insight without enterprise hardware'
   },
-  upcomingKicker: 'In development',
+  upcomingKicker: 'Own product',
   upcomingTitle: 'ThunderVox',
   upcomingIntro:
-    'A SIP platform for devices at physical endpoints – intercom panels, elevators, panic buttons, SOS points. An 84softworks own product, in active development.',
+    'A SIP platform for devices at physical endpoints – intercom panels, elevators, panic buttons, SOS points. An 84softworks own product, in active development: the core, the server and the operator console already run live.',
+  upcomingShots: [
+    {
+      title: 'Operator console',
+      body: 'SIP numbers of panels and subscribers, who is registered right now, console users with roles and an audit trail of every change. Light and dark themes, EN/RU, works on a phone.'
+    },
+    {
+      title: 'Integration with the operator backend',
+      body: 'Named service-API tokens, ready-made endpoint calls, the wake-push contract and a delivery log – the seam an operator plugs its own backend into.'
+    }
+  ],
   upcomingPillars: [
     {
       title: 'Push-wait at the core',
@@ -149,10 +164,14 @@ const en: Copy = {
     }
   ],
   upcomingStatus: {
-    pre: 'The core is written and tested against a real production setup. ',
-    bold: 'Screenshots and demo on the way',
+    pre: 'Running on thundervox.ru – core, server and console in our own images; any SIP client registers and calls through it. ',
+    bold: 'Source is open',
     post: '.'
   },
+  upcomingLinks: [
+    { href: 'https://github.com/beiroun/thundervox', label: 'Source on GitHub' },
+    { href: 'https://github.com/beiroun/thundervox/blob/release/LICENSE', label: 'Business Source License 1.1' }
+  ],
   trackKicker: 'Track record',
   trackTitle: 'The numbers',
   trackBody:
@@ -178,7 +197,7 @@ const ru: Copy = {
   nav: [
     { href: '#founder', label: 'Фаундер' },
     { href: '#flagship', label: 'Флагман' },
-    { href: '#upcoming', label: 'В разработке' },
+    { href: '#upcoming', label: 'Продукты' },
     { href: '#track', label: 'Опыт' },
     { href: '#join', label: 'Команда' }
   ],
@@ -223,10 +242,20 @@ const ru: Copy = {
     bold: 'меньше $2 700',
     post: ' железа. Корпоративная аналитика без корпоративного железа'
   },
-  upcomingKicker: 'В разработке',
+  upcomingKicker: 'Собственный продукт',
   upcomingTitle: 'ThunderVox',
   upcomingIntro:
-    'SIP-платформа для устройств на физических точках – домофоны, лифты, тревожные кнопки, SOS-колонны. Собственный продукт 84softworks, в активной разработке.',
+    'SIP-платформа для устройств на физических точках – домофоны, лифты, тревожные кнопки, SOS-колонны. Собственный продукт 84softworks, в активной разработке: ядро, сервер и операторская консоль уже работают вживую.',
+  upcomingShots: [
+    {
+      title: 'Операторская консоль',
+      body: 'SIP-номера панелей и абонентов, кто зарегистрирован прямо сейчас, пользователи консоли с ролями и журнал каждого изменения. Светлая и тёмная темы, RU/EN, работает с телефона.'
+    },
+    {
+      title: 'Интеграция с бэкендом оператора',
+      body: 'Именованные токены service-API, готовые вызовы эндпоинтов, контракт пробуждающего пуша и журнал доставки – стык, в который оператор включает свой бэкенд.'
+    }
+  ],
   upcomingPillars: [
     {
       title: 'Push-wait – в основе',
@@ -246,10 +275,14 @@ const ru: Copy = {
     }
   ],
   upcomingStatus: {
-    pre: 'Ядро написано и протестировано на реальном контуре. ',
-    bold: 'Ожидайте скриншоты и демо',
+    pre: 'Работает на thundervox.ru – ядро, сервер и консоль в собственных образах, любой SIP‑клиент регистрируется и звонит через него. ',
+    bold: 'Исходники открыты',
     post: '.'
   },
+  upcomingLinks: [
+    { href: 'https://github.com/beiroun/thundervox', label: 'Исходники на GitHub' },
+    { href: 'https://github.com/beiroun/thundervox/blob/release/LICENSE', label: 'Business Source License 1.1' }
+  ],
   trackKicker: 'Опыт',
   trackTitle: 'Цифры',
   trackBody:

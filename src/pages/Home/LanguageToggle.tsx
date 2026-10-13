@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /** RU/EN language switch shown in the header. */
 import { forwardRef } from 'react';
 import { useLang } from '../../i18n/LangContext';

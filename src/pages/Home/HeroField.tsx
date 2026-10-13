@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
  * Mounts the animated hero backdrop as canvas layers inside the navy band. The
  * `variant` is chosen on load and re-rolled by the full-screen wordmark; each new

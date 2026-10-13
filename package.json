@@ -1,6 +1,10 @@
 {
   "name": "84softworks-landing",
   "private": true,
+  "license": "UNLICENSED",
+  "description": "The website of 84softworks - an engineering studio building reliable B2B software",
+  "repository": "github:beiroun/84softworks-landing",
+  "homepage": "https://84softworks.com",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

@@ -1,18 +1,19 @@
+// Copyright (c) 2026 Andrei Baranov (84softworks). All rights reserved. Published for reference only - see LICENSE.
 /**
- * One flagship product tile: a click-through screenshot that opens the case gallery,
- * with the product's heading and blurb beneath. The image is flat (no frame), matching
- * the founder photo — the screenshots already carry their own window chrome.
+ * One product tile: a click-through screenshot that opens the case gallery, with the
+ * product's heading and blurb beneath. The image is flat (no frame), matching the founder
+ * photo — the screenshots already carry their own window chrome.
  */
-import type { FlagshipCase } from './flagshipCases';
+import type { ProductCase } from './productCases';
 
-interface FlagshipTileProps {
-  case_: FlagshipCase;
+interface ProductTileProps {
+  case_: ProductCase;
   title: string;
   body: string;
   onOpen: () => void;
 }
 
-const FlagshipTile = ({ case_, title, body, onOpen }: FlagshipTileProps) => (
+const ProductTile = ({ case_, title, body, onOpen }: ProductTileProps) => (
   <div className="tile">
     <button type="button" className="tile__shot" onClick={onOpen} aria-label={`${title} – open screenshots`}>
       <img src={case_.hero} alt={title} />
@@ -28,4 +29,4 @@ const FlagshipTile = ({ case_, title, body, onOpen }: FlagshipTileProps) => (
   </div>
 );
 
-export default FlagshipTile;
+export default ProductTile;
