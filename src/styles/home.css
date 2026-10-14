@@ -462,48 +462,70 @@ h2 {
   font-weight: var(--fw-regular);
 }
 
-/* --- Case gallery: fullscreen lightbox over the flagship section ---
-   Portaled to <body>; z-index clears the contact popover (100), header (30) and wordmark (40). */
+/* --- Case gallery: fullscreen lightbox over a product section ---
+   Portaled to <body>; z-index clears the contact popover (100), header (30) and wordmark (40).
+   The screenshot owns the whole viewport on every screen size; the header, arrows and
+   thumbnail strip float above it on scrims and never take space away from the image. */
 .gallery {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--sp-24);
+  overflow: hidden;
   /* dark navy stage so the light screenshots stand out and the UI chrome recedes */
   background: radial-gradient(120% 120% at 50% 0%, #263056 0%, #161b2e 55%, #0e1120 100%);
   font-family: var(--font); /* keep gallery text on Onest, not a system fallback */
+  /* Single-finger drags reach the component as swipes; native pinch zoom stays available. */
+  touch-action: pinch-zoom;
+  overscroll-behavior: contain;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-.gallery__inner {
-  width: min(1600px, 96vw);
+/* The field the image floats in; a click on the empty part of it dismisses the gallery.
+   The top inset equals the header bar so the title never lands on the screenshot; the
+   arrows and the thumbnail strip do float over the image. */
+.gallery__stage {
+  position: absolute;
+  inset: 0;
   display: flex;
-  flex-direction: column;
-  gap: var(--sp-16);
+  align-items: center;
+  justify-content: center;
+  padding-top: 36px; /* a hair under the title text (bar is 66px, its scrim overlaps) */
+}
+
+.gallery__stage img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
 }
 
 .gallery__top {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--sp-16);
+  padding: var(--sp-16) var(--sp-24);
   color: var(--on-brand);
+  /* scrim keeps the labels legible when a light screenshot runs under the bar */
+  background: linear-gradient(to bottom, rgba(14, 17, 32, 0.85), rgba(14, 17, 32, 0));
 }
 
 .gallery__title {
   display: flex;
   align-items: center;
   gap: var(--sp-12);
+  min-width: 0;
   font-size: var(--fs-nav);
 }
 
-.gallery__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #3ec07a;
-  box-shadow: 0 0 0 3px rgba(62, 192, 122, 0.18);
+.gallery__view {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .gallery__prod {
@@ -511,6 +533,7 @@ h2 {
 }
 
 .gallery__actions {
+  flex: none;
   display: flex;
   align-items: center;
   gap: var(--sp-16);
@@ -540,56 +563,81 @@ h2 {
   background: rgba(255, 255, 255, 0.16);
 }
 
-.gallery__stage {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-16);
-}
-
+/* Arrows float at the vertical centre of the side edges, above the image. */
 .gallery__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: none;
   width: 46px;
   height: 46px;
   border: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(14, 17, 32, 0.6);
   color: #dfe4f0;
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
 
+.gallery__nav--prev {
+  left: var(--sp-16);
+}
+
+.gallery__nav--next {
+  right: var(--sp-16);
+}
+
 .gallery__nav:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(14, 17, 32, 0.85);
 }
 
-.gallery__frame {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Approach zone along the bottom edge that holds the thumbnail strip. With a mouse the strip
+   is tucked away and slides up when the pointer enters the zone (or a thumb takes keyboard
+   focus); the extra top padding is the "approach" distance. Touch devices have no hover, so
+   there the strip simply stays visible. */
+.gallery__dock {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding-top: 40px;
 }
 
-.gallery__frame img {
-  max-width: 100%;
-  /* Cap by viewport height minus the top bar, thumbs and gaps so short screens (e.g. 720p)
-     keep the thumbnails on-screen; tall screens fall back to the 82vh presentation cap. */
-  max-height: min(82vh, calc(100vh - 190px));
-  display: block;
+@media (hover: hover) {
+  .gallery__thumbs {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .gallery__dock:hover .gallery__thumbs,
+  .gallery__dock:focus-within .gallery__thumbs {
+    opacity: 1;
+    transform: none;
+  }
 }
 
+/* Thumbnail strip on a bottom scrim. It scrolls sideways once the thumbs outgrow the width;
+   the auto margins on the first/last thumb centre the row while it still fits (a centred
+   justify-content would clip the overflow on the left with no way to scroll to it). */
 .gallery__thumbs {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
   gap: var(--sp-12);
+  padding: var(--sp-24) var(--sp-16) var(--sp-16);
+  overflow-x: auto;
+  scrollbar-width: none;
+  touch-action: pan-x pinch-zoom;
+  background: linear-gradient(to top, rgba(14, 17, 32, 0.85), rgba(14, 17, 32, 0));
+}
+
+.gallery__thumbs::-webkit-scrollbar {
+  display: none;
 }
 
 .gallery__thumb {
+  flex: none;
   width: 104px;
   height: 66px;
   padding: 0;
@@ -602,6 +650,14 @@ h2 {
   outline-offset: 2px;
   cursor: pointer;
   transition: opacity 0.15s ease;
+}
+
+.gallery__thumb:first-child {
+  margin-left: auto;
+}
+
+.gallery__thumb:last-child {
+  margin-right: auto;
 }
 
 .gallery__thumb img {
@@ -901,18 +957,26 @@ footer a:hover {
     font-size: 12px;
     letter-spacing: 0.12em;
   }
-  .gallery {
-    padding: var(--sp-16);
-  }
+  /* Gallery on a phone: the floating controls shrink and sit closer to the edges. */
   .gallery__stage {
-    gap: var(--sp-8);
+    padding-top: 32px; /* a hair under the title text (bar is 58px) */
+  }
+  .gallery__top {
+    padding: var(--sp-12) var(--sp-16);
   }
   .gallery__nav {
     width: 38px;
     height: 38px;
   }
-  .gallery__frame img {
-    max-height: 56vh;
+  .gallery__nav--prev {
+    left: var(--sp-8);
+  }
+  .gallery__nav--next {
+    right: var(--sp-8);
+  }
+  .gallery__thumbs {
+    gap: var(--sp-8);
+    padding: var(--sp-16) var(--sp-12) var(--sp-12);
   }
   .gallery__thumb {
     width: 76px;
