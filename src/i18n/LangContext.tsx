@@ -2,7 +2,8 @@
 /**
  * Language context: holds the active language, persists the choice, and exposes
  * the resolved copy. Base language is the client locale (ru-* → Russian), unless
- * the visitor has already chosen one (localStorage).
+ * the visitor has already chosen one (localStorage). Each page sets its own browser-tab title
+ * from the copy, so the provider only keeps <html lang> in sync.
  */
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { dict, type Copy, type Lang } from './dict';
@@ -29,7 +30,6 @@ export const LangProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    document.title = dict[lang].docTitle;
   }, [lang]);
 
   const setLang = (next: Lang) => {

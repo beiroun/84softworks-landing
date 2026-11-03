@@ -4,6 +4,7 @@
  * Language-invariant tokens (wordmark, social labels, hrefs, raw metric numbers)
  * live in the components, not here.
  */
+import type { ProductId } from '../pages/Home/productCases';
 
 export type Lang = 'en' | 'ru';
 
@@ -32,6 +33,24 @@ export interface Kill {
   pre: string;
   bold: string;
   post: string;
+}
+
+/** A card of the /products page; the images and public links live in productCases.ts. */
+export interface ProductCard {
+  title: string;
+  /** short badge above the title, e.g. "In production · FusionDynamics case" */
+  status: string;
+  body: string;
+}
+
+export interface ProductsCopy {
+  /** Browser-tab <title> of the /products page. */
+  docTitle: string;
+  title: string;
+  lede: string;
+  sourceLink: string;
+  licenseLink: string;
+  cards: Record<ProductId, ProductCard>;
 }
 
 export interface ContactCopy {
@@ -70,6 +89,8 @@ export interface Copy {
   upcomingStatus: Kill;
   /** Where the product lives in public: source and licence. */
   upcomingLinks: NavLink[];
+  /** Link to the /products page: under the in-the-works product and in the footer. */
+  allProducts: string;
   trackKicker: string;
   trackTitle: string;
   trackBody: string;
@@ -80,13 +101,14 @@ export interface Copy {
   joinNote: string;
   footerTagline: string;
   footerRights: string;
+  products: ProductsCopy;
 }
 
 const en: Copy = {
   nav: [
     { href: '#founder', label: 'Founder' },
     { href: '#flagship', label: 'Flagship' },
-    { href: '#upcoming', label: 'Products' },
+    { href: '#upcoming', label: 'In the works' },
     { href: '#track', label: 'Track record' },
     { href: '#join', label: 'Join' }
   ],
@@ -131,14 +153,14 @@ const en: Copy = {
     bold: 'under $2,700',
     post: ' of hardware. Enterprise-grade insight without enterprise hardware'
   },
-  upcomingKicker: 'Own product',
+  upcomingKicker: 'In the works',
   upcomingTitle: 'ThunderVox',
   upcomingIntro:
     'A SIP platform for devices at physical endpoints – intercom panels, elevators, panic buttons, SOS points. An 84softworks own product, in active development: the core, the server and the operator console already run live.',
   upcomingShots: [
     {
       title: 'Operator console',
-      body: 'SIP numbers of panels and subscribers, who is registered right now, console users with roles and an audit trail of every change. Light and dark themes, EN/RU, works on a phone.'
+      body: 'SIP numbers of panels and subscribers, who is registered right now, the server event log, console users with roles and an audit trail of every change. Light and dark themes, EN/RU, works on a phone.'
     },
     {
       title: 'Integration with the operator backend',
@@ -172,6 +194,7 @@ const en: Copy = {
     { href: 'https://github.com/beiroun/thundervox', label: 'Source on GitHub' },
     { href: 'https://github.com/beiroun/thundervox/blob/release/LICENSE', label: 'Business Source License 1.1' }
   ],
+  allProducts: 'All products →',
   trackKicker: 'Track record',
   trackTitle: 'The numbers',
   trackBody:
@@ -190,14 +213,43 @@ const en: Copy = {
     "Not actively hiring right now – but if you build software that holds and want to work with someone who's been through every layer, reach out.",
   joinNote: 'I reply personally – usually within a day',
   footerTagline: 'Building since 2023 · 84softworks.com',
-  footerRights: '© 2026 84softworks'
+  footerRights: '© 2026 84softworks',
+  products: {
+    docTitle: 'Products · 84softworks',
+    title: 'Products',
+    lede: 'What is built and what is being built: the flagship case running in production and our own products in the works. Open a cover to page through the screens.',
+    sourceLink: 'Source on GitHub',
+    licenseLink: 'Business Source License 1.1',
+    cards: {
+      senseflow: {
+        title: 'SenseFlow',
+        status: 'In production · FusionDynamics case',
+        body: 'AI analytics of calls and chats: transcription with speaker separation, summaries and classification, a weekly AI report on recurring problems, a chat bot and its task queues.'
+      },
+      tldr: {
+        title: 'TLDR Messenger',
+        status: 'In production · FusionDynamics case',
+        body: 'A fully in-house messaging platform – operator and client apps, attachments, surveys, real-time delivery.'
+      },
+      thundervox: {
+        title: 'ThunderVox',
+        status: 'In the works · open source',
+        body: 'A SIP platform for devices at physical endpoints – intercom panels, elevators, panic buttons. The operator console, the service API for an operator backend and the wake-push contract.'
+      },
+      pathfinder: {
+        title: 'Pathfinder',
+        status: 'In production · open source',
+        body: 'One QR code, the right destination for every device: a short link sends iOS, Huawei, Android and desktop each to its own store or site. Scan statistics by platform and a management console.'
+      }
+    }
+  }
 };
 
 const ru: Copy = {
   nav: [
     { href: '#founder', label: 'Фаундер' },
     { href: '#flagship', label: 'Флагман' },
-    { href: '#upcoming', label: 'Продукты' },
+    { href: '#upcoming', label: 'В работе' },
     { href: '#track', label: 'Опыт' },
     { href: '#join', label: 'Команда' }
   ],
@@ -242,14 +294,14 @@ const ru: Copy = {
     bold: 'меньше $2 700',
     post: ' железа. Корпоративная аналитика без корпоративного железа'
   },
-  upcomingKicker: 'Собственный продукт',
+  upcomingKicker: 'В работе',
   upcomingTitle: 'ThunderVox',
   upcomingIntro:
     'SIP-платформа для устройств на физических точках – домофоны, лифты, тревожные кнопки, SOS-колонны. Собственный продукт 84softworks, в активной разработке: ядро, сервер и операторская консоль уже работают вживую.',
   upcomingShots: [
     {
       title: 'Операторская консоль',
-      body: 'SIP-номера панелей и абонентов, кто зарегистрирован прямо сейчас, пользователи консоли с ролями и журнал каждого изменения. Светлая и тёмная темы, RU/EN, работает с телефона.'
+      body: 'SIP-номера панелей и абонентов, кто зарегистрирован прямо сейчас, журнал событий сервера, пользователи консоли с ролями и журнал каждого изменения. Светлая и тёмная темы, RU/EN, работает с телефона.'
     },
     {
       title: 'Интеграция с бэкендом оператора',
@@ -283,6 +335,7 @@ const ru: Copy = {
     { href: 'https://github.com/beiroun/thundervox', label: 'Исходники на GitHub' },
     { href: 'https://github.com/beiroun/thundervox/blob/release/LICENSE', label: 'Business Source License 1.1' }
   ],
+  allProducts: 'Все продукты →',
   trackKicker: 'Опыт',
   trackTitle: 'Цифры',
   trackBody:
@@ -301,7 +354,36 @@ const ru: Copy = {
     'Прямо сейчас активного найма нет – но если ты делаешь софт, который держит, и хочешь работать с тем, кто прошёл каждый слой стека, напиши.',
   joinNote: 'Отвечаю лично – обычно в течение дня',
   footerTagline: 'Строим с 2023 · 84softworks.com',
-  footerRights: '© 2026 84softworks'
+  footerRights: '© 2026 84softworks',
+  products: {
+    docTitle: 'Продукты · 84softworks',
+    title: 'Продукты',
+    lede: 'Что построено и что строится: флагманский кейс, который работает в продакшене, и собственные продукты в работе. Откройте обложку, чтобы пролистать экраны.',
+    sourceLink: 'Исходники на GitHub',
+    licenseLink: 'Business Source License 1.1',
+    cards: {
+      senseflow: {
+        title: 'SenseFlow',
+        status: 'В продакшене · кейс FusionDynamics',
+        body: 'AI-аналитика звонков и чатов: транскрибация с разделением спикеров, суммаризация и классификация, еженедельный AI-отчёт о повторяющихся проблемах, чат-бот и его очереди задач.'
+      },
+      tldr: {
+        title: 'TLDR Messenger',
+        status: 'В продакшене · кейс FusionDynamics',
+        body: 'Полностью собственный мессенджер – операторские и клиентские приложения, вложения, опросы, доставка в реальном времени.'
+      },
+      thundervox: {
+        title: 'ThunderVox',
+        status: 'В работе · открытый код',
+        body: 'SIP-платформа для устройств на физических точках – домофоны, лифты, тревожные кнопки. Операторская консоль, service-API для бэкенда оператора и контракт пробуждающего пуша.'
+      },
+      pathfinder: {
+        title: 'Pathfinder',
+        status: 'В продакшене · открытый код',
+        body: 'Один QR-код – своя точка назначения для каждого устройства: короткая ссылка ведёт iOS, Huawei, Android и десктоп каждый в свой магазин или на сайт. Статистика сканов по платформам и консоль управления.'
+      }
+    }
+  }
 };
 
 export const dict: Record<Lang, Copy> = { en, ru };

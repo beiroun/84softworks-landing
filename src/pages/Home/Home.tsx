@@ -2,11 +2,12 @@
 /**
  * Organization landing home page — the 84softworks org business card.
  * Single static page (no backend): brand top-band with a scroll-morphing wordmark,
- * founder-first editorial body, flagship case study, the own product, track-record
- * metrics, hiring and contacts. Copy comes from the i18n dictionary; the header animation lives in
- * useHeaderMorph.
+ * founder-first editorial body, flagship case study, the product in the works (with a link
+ * to the /products gallery), track-record metrics, hiring and contacts. Copy comes from the i18n
+ * dictionary; the header animation lives in useHeaderMorph.
  */
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLang } from '../../i18n/LangContext';
 import { useHeaderMorph } from './useHeaderMorph';
 import { useScrollSpy } from './useScrollSpy';
@@ -14,9 +15,10 @@ import LanguageToggle from './LanguageToggle';
 import ContactMenu from './ContactMenu';
 import HeroField from './HeroField';
 import { pickHeroVariant, HERO_VARIANTS } from './heroFieldEngine';
-import { EMAIL, contactLinkRows } from './contacts';
+import { contactLinkRows } from './contacts';
 import ProductTile from './ProductTile';
 import CaseGallery from './CaseGallery';
+import SiteFooter from './SiteFooter';
 import { flagshipCases, thundervoxCases, type ProductCase } from './productCases';
 import { smoothScrollTo } from '../../smoothScroll';
 
@@ -32,6 +34,10 @@ const Home = () => {
   const [heroVariant, setHeroVariant] = useState(pickHeroVariant);
   // The product case the gallery is showing (flagship or ThunderVox), or null while closed.
   const [openCase, setOpenCase] = useState<ProductCase | null>(null);
+
+  useEffect(() => {
+    document.title = t.docTitle;
+  }, [t]);
 
   // Shared by the wordmark and the eyebrow: at the top it shuffles the hero design,
   // once scrolled it returns to the top.
@@ -230,6 +236,11 @@ const Home = () => {
               </a>
             ))}
           </div>
+          <div className="products-cta">
+            <Link className="btn-fill" to="/products">
+              {t.allProducts}
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -263,34 +274,7 @@ const Home = () => {
         </div>
       </section>
 
-      <footer>
-        <div className="wrap">
-          <div className="footer__cols">
-            <div className="footer__col">
-              <strong>84softworks</strong>
-              <br />
-              <span className="muted">{t.footerTagline}</span>
-            </div>
-            <div className="footer__col">
-              <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-              {contactLinkRows.map((row) => (
-                <span key={row[0].label}>
-                  <br />
-                  {row.map((social, index) => (
-                    <span key={social.label}>
-                      {index > 0 && ' · '}
-                      <a href={social.href} target="_blank" rel="noreferrer">
-                        {social.label}
-                      </a>
-                    </span>
-                  ))}
-                </span>
-              ))}
-            </div>
-            <div className="footer__col muted">{t.footerRights}</div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
       </main>
 
       <CaseGallery case_={openCase} onClose={() => setOpenCase(null)} />

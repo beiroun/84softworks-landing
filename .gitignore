@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Site-local hosting artifacts are not part of the public application source.
+docker-compose.yml
+nginx.conf
+.env
+.env.*
+!.env.example
+.deploy.env

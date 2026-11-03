@@ -1,10 +1,10 @@
 # 84softworks Landing
 
 The website of [84softworks](https://84softworks.com) - an engineering studio
-building reliable B2B software, founded by Andrei Baranov. One page in English
-and Russian: the founder, the flagship case, the products in development, the
-track record and hiring. Fully static - no backend, no API calls, no external
-requests.
+building reliable B2B software, founded by Andrei Baranov. In English and
+Russian: the home page (the founder, the flagship case, the product in the
+works, the track record and hiring) and the products gallery at `/products`.
+Fully static - no backend, no API calls, no external requests.
 
 ---
 
@@ -15,9 +15,13 @@ requests.
 | Hero | the headline, the lede and four metrics over an animated dot field; on mobile the hero wordmark morphs into the header |
 | Founder | who builds this: bio and social links |
 | Flagship | FusionDynamics - SenseFlow (AI analytics core) and TLDR Messenger, with screenshot galleries |
-| Products | ThunderVox - the product in development: console screenshots, deployment status, links to its source and licence |
+| In the works | ThunderVox - the product in development: console screenshots, deployment status, links to its source and licence, the way to the products gallery |
 | Track record | facts and figures |
 | Join | hiring note and the contact menu: copy the address, open in Gmail or in the mail client |
+
+The products gallery (`/products`) shows every product as a card - SenseFlow,
+TLDR Messenger, ThunderVox and Pathfinder - with a status, a blurb, public links
+and the same fullscreen screenshot viewer.
 
 Every display string lives in `src/i18n/dict.ts`, one object per language; the
 EN/RU switch is in the header. The navigation follows the scroll (scroll-spy),
@@ -29,7 +33,7 @@ anchors scroll smoothly.
 |---|---|
 | Language | TypeScript 5.8, strict |
 | UI | React 19, plain CSS with design tokens (`src/styles`) |
-| Routing | React Router 7 (`createBrowserRouter`): one route, everything else redirects to `/` |
+| Routing | React Router 7 (`createBrowserRouter`): `/` and `/products`, everything else redirects to `/` |
 | Scrolling | Lenis (smooth scroll), a scroll-spy for the navigation, a header that morphs out of the hero wordmark |
 | Build | Vite 6, Node 24 LTS |
 | Lint / format | ESLint 9 (flat config), Prettier |
@@ -43,9 +47,11 @@ English.
 ```
 i18n/           dict.ts (EN + RU copy), LangContext (current language)
 pages/Home/     Home.tsx (the sections), HeroField + heroFieldEngine (animated dot field),
-                ProductTile + CaseGallery + productCases.ts (screenshot tiles and the lightbox),
-                ContactMenu + contacts.ts, LanguageToggle, useHeaderMorph, useScrollSpy
-routes/         createBrowserRouter, a single route
+                ProductTile + CaseGallery + productCases.ts (screenshot tiles, the lightbox and
+                the product catalog), ContactMenu + contacts.ts, LanguageToggle, SiteFooter,
+                useHeaderMorph, useScrollSpy
+pages/Products/ Products.tsx (the products gallery)
+routes/         createBrowserRouter: the two pages under a layout with scroll restoration
 styles/         tokens.css (colors, type, spacing), base.css (reset, @font-face), home.css (sections)
 smoothScroll.ts Lenis setup
 ```
@@ -65,7 +71,8 @@ smoothScroll.ts Lenis setup
   Twitter card tags; `public/sitemap.xml` and the manifest name the site. The
   absolute addresses name `84softworks.com` - change them together when the site
   lives on another name.
-- **Screenshots** - `public/cases/`, product screens with customer data blurred.
+- **Screenshots** - `public/cases/`, product screens in light and dark themes
+  with customer personal data blurred.
 
 ## Local development
 
@@ -85,7 +92,14 @@ npm run dev          # http://localhost:5173
 ## Deploy
 
 The site is fully static: `npm run build` produces `dist/`, which is uploaded
-to the host as-is. There is no server-side code.
+to the host as-is. There is no server-side code. The build also writes
+`dist/products/index.html` - a copy of the entry page with its own canonical
+address - so a direct visit or a reload of `/products` works on any static
+host without a rewrite rule.
+
+Host-specific deployment configuration is private and is not published with
+the application source. Upload assets before HTML and retain old hashed assets
+long enough for already open pages. Check both `/` and `/products` after publishing.
 
 ## License
 

@@ -36,6 +36,16 @@
   height: var(--navh);
 }
 
+/* Header wordmark of the inner pages: the docked wordmark's look, as a plain link home. */
+.brand-link {
+  font-family: var(--wordmark-font);
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--on-brand);
+  text-decoration: none;
+}
+
 /* Invisible measure anchor — the morph target for the wordmark's final slot. */
 .brand-anchor {
   font-family: var(--wordmark-font);
@@ -390,6 +400,50 @@ h2 {
   border-color: var(--accent);
 }
 
+/* Inside a product card the links sit closer to the blurb they belong to. */
+.product-links--tile {
+  margin-top: var(--sp-16);
+}
+
+/* The way from the product in the works to the full /products gallery. */
+.products-cta {
+  margin-top: 40px;
+}
+
+/* --- /products page --- */
+.products-page {
+  padding-top: var(--navh); /* clear the fixed header — there is no hero band to sit under */
+  background: var(--canvas);
+}
+
+.page-title {
+  font-size: var(--text-heading);
+  font-weight: var(--fw-regular);
+  line-height: 1;
+  letter-spacing: var(--tracking);
+}
+
+/* Catalog cards carry a badge and links, so the rows need more air than the home tiles. */
+.tiles--catalog {
+  row-gap: var(--sp-64);
+}
+
+/* Status badge of a catalog card: production, in the works, live. */
+.tile__status {
+  display: inline-block;
+  margin-top: var(--sp-16);
+  padding: 5px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  line-height: 1.2;
+  color: var(--ink-soft);
+}
+
+.tile__status + h3 {
+  margin-top: var(--sp-12);
+}
+
 /* Click-through screenshot that opens the case gallery. Flat like the founder photo —
    the screenshots already carry their own window frame. */
 .tile__shot {
@@ -407,8 +461,12 @@ h2 {
 .tile__shot img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top; /* favor the dashboard header over the data rows below */
+  /* The covers are whole browser windows on a transparent margin, captured at slightly different
+     proportions; contain shows each window entire instead of clipping a wider one at the sides.
+     Bottom-aligned, so the screen-count badge always sits on the window's corner and every window
+     keeps the same gap to the heading below it. */
+  object-fit: contain;
+  object-position: bottom;
   display: block;
   transition: transform 0.4s ease;
 }
@@ -952,6 +1010,12 @@ footer a:hover {
   }
   .tiles {
     grid-template-columns: 1fr;
+  }
+  .tiles--catalog {
+    row-gap: var(--sp-48);
+  }
+  .products-cta {
+    margin-top: 32px;
   }
   .eyebrow {
     font-size: 12px;
