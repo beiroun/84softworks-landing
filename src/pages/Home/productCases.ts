@@ -9,10 +9,17 @@
  *
  * One shot per screen, ordered by what tells a buyer most; the first shot is the tile cover and
  * is always a dark screen (it stands out on the white page).
- * Customer personal data is blurred on the files themselves, so a swapped file under
- * /public/cases needs no code change.
+ * Customer personal data is blurred on the files themselves; a swapped file under /public/cases
+ * needs only a new SHOTS_VERSION.
  * View labels are English-only (technical screen names) — localize if needed.
  */
+
+/**
+ * Bumped with every new set of shots. The files keep their names, and the browser and Cloudflare keep a cached
+ * image for hours, so without a new address a retaken shot would not show up until that expires.
+ */
+const SHOTS_VERSION = '2026-11-25';
+const shot = (name: string) => `/cases/${name}.png?v=${SHOTS_VERSION}`;
 
 export interface CaseShot {
   /** absolute path under /public */
@@ -31,46 +38,46 @@ export interface ProductCase {
 
 const senseflowCase: ProductCase = {
   name: 'SenseFlow',
-  hero: '/cases/sf-calls.png',
+  hero: shot('sf-calls'),
   shots: [
-    { src: '/cases/sf-calls.png', view: 'Call log' },
-    { src: '/cases/sf-ai-report.png', view: 'AI weekly report' },
-    { src: '/cases/sf-chat-card.png', view: 'Chat card' },
-    { src: '/cases/sf-chat-analysis.png', view: 'Chat analysis' },
-    { src: '/cases/sf-summary.png', view: 'Call processing' },
-    { src: '/cases/sf-queues.png', view: 'Task queues' }
+    { src: shot('sf-calls'), view: 'Call log' },
+    { src: shot('sf-ai-report'), view: 'AI weekly report' },
+    { src: shot('sf-chat-card'), view: 'Chat card' },
+    { src: shot('sf-chat-analysis'), view: 'Chat analysis' },
+    { src: shot('sf-summary'), view: 'Call processing' },
+    { src: shot('sf-queues'), view: 'Task queues' }
   ]
 };
 
 const tldrCase: ProductCase = {
   name: 'TLDR',
-  hero: '/cases/tldr-workspace.png',
+  hero: shot('tldr-workspace'),
   shots: [
-    { src: '/cases/tldr-workspace.png', view: 'Operator workspace' },
-    { src: '/cases/tldr-mobile.png', view: 'Client app' },
-    { src: '/cases/tldr-stats.png', view: 'Chat statistics' },
-    { src: '/cases/tldr-reports.png', view: 'Operator reports' }
+    { src: shot('tldr-workspace'), view: 'Operator workspace' },
+    { src: shot('tldr-mobile'), view: 'Client app' },
+    { src: shot('tldr-stats'), view: 'Chat statistics' },
+    { src: shot('tldr-reports'), view: 'Operator reports' }
   ]
 };
 
 // ThunderVox: the live operator console in a browser window, English UI, light and dark themes.
 const thundervoxConsoleCase: ProductCase = {
   name: 'ThunderVox Console',
-  hero: '/cases/tvx-dashboard.png',
+  hero: shot('tvx-dashboard'),
   shots: [
-    { src: '/cases/tvx-dashboard.png', view: 'Dashboard' },
-    { src: '/cases/tvx-sip-numbers.png', view: 'SIP numbers' },
-    { src: '/cases/tvx-events.png', view: 'Event log' },
-    { src: '/cases/tvx-audit.png', view: 'Audit trail' }
+    { src: shot('tvx-dashboard'), view: 'Dashboard' },
+    { src: shot('tvx-sip-numbers'), view: 'SIP numbers' },
+    { src: shot('tvx-events'), view: 'Event log' },
+    { src: shot('tvx-audit'), view: 'Audit trail' }
   ]
 };
 
 const thundervoxIntegrationCase: ProductCase = {
   name: 'ThunderVox Integration',
-  hero: '/cases/tvx-integration.png',
+  hero: shot('tvx-integration'),
   shots: [
-    { src: '/cases/tvx-integration.png', view: 'Service API and endpoints' },
-    { src: '/cases/tvx-wake-push.png', view: 'Wake push contract' }
+    { src: shot('tvx-integration'), view: 'Service API and endpoints' },
+    { src: shot('tvx-wake-push'), view: 'Wake push contract' }
   ]
 };
 
@@ -83,13 +90,13 @@ const thundervoxCase: ProductCase = {
 
 const pathfinderCase: ProductCase = {
   name: 'Pathfinder',
-  hero: '/cases/pf-qr-card.png',
+  hero: shot('pf-qr-card'),
   shots: [
-    { src: '/cases/pf-qr-card.png', view: 'QR code card' },
-    { src: '/cases/pf-stats.png', view: 'Scan statistics' },
-    { src: '/cases/pf-stats-breakdown.png', view: 'Devices, destinations and codes' },
-    { src: '/cases/pf-qr-codes.png', view: 'QR codes' },
-    { src: '/cases/pf-about.png', view: 'About and licence' }
+    { src: shot('pf-qr-card'), view: 'QR code card' },
+    { src: shot('pf-stats'), view: 'Scan statistics' },
+    { src: shot('pf-stats-breakdown'), view: 'Devices, destinations and codes' },
+    { src: shot('pf-qr-codes'), view: 'QR codes' },
+    { src: shot('pf-about'), view: 'About and licence' }
   ]
 };
 
