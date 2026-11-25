@@ -7,8 +7,8 @@
  * Home tiles pair with the dictionary by index — flagship: [0] SenseFlow, [1] TLDR;
  * ThunderVox: [0] console, [1] integration. The /products page pairs by product id.
  *
- * One shot per screen, each in the theme it reads best in; the first shot is the tile cover —
- * a dark screen by default (it stands out on the white page), unless Andrei picked another.
+ * One shot per screen, ordered by what tells a buyer most; the first shot is the tile cover and
+ * is always a dark screen (it stands out on the white page).
  * Customer personal data is blurred on the files themselves, so a swapped file under
  * /public/cases needs no code change.
  * View labels are English-only (technical screen names) — localize if needed.
@@ -35,34 +35,33 @@ const senseflowCase: ProductCase = {
   shots: [
     { src: '/cases/sf-calls.png', view: 'Call log' },
     { src: '/cases/sf-ai-report.png', view: 'AI weekly report' },
+    { src: '/cases/sf-chat-card.png', view: 'Chat card' },
+    { src: '/cases/sf-chat-analysis.png', view: 'Chat analysis' },
     { src: '/cases/sf-summary.png', view: 'Call processing' },
-    { src: '/cases/sf-call-card.png', view: 'Call card and transcript' },
-    { src: '/cases/sf-queues.png', view: 'Task queues' },
-    { src: '/cases/sf-chat-bot.png', view: 'Chat bot' }
+    { src: '/cases/sf-queues.png', view: 'Task queues' }
   ]
 };
 
 const tldrCase: ProductCase = {
   name: 'TLDR',
-  hero: '/cases/tldr-oper-list.png',
+  hero: '/cases/tldr-workspace.png',
   shots: [
-    { src: '/cases/tldr-oper-list.png', view: 'Operator workspace' },
-    { src: '/cases/tldr-oper-stats.png', view: 'Operator stats' },
-    { src: '/cases/tldr-oper-report.png', view: 'Operator report' },
-    { src: '/cases/tldr-mobile.png', view: 'Client app' }
+    { src: '/cases/tldr-workspace.png', view: 'Operator workspace' },
+    { src: '/cases/tldr-mobile.png', view: 'Client app' },
+    { src: '/cases/tldr-stats.png', view: 'Chat statistics' },
+    { src: '/cases/tldr-reports.png', view: 'Operator reports' }
   ]
 };
 
 // ThunderVox: the live operator console in a browser window, English UI, light and dark themes.
 const thundervoxConsoleCase: ProductCase = {
   name: 'ThunderVox Console',
-  hero: '/cases/tvx-audit.png',
+  hero: '/cases/tvx-dashboard.png',
   shots: [
-    { src: '/cases/tvx-audit.png', view: 'Audit trail' },
     { src: '/cases/tvx-dashboard.png', view: 'Dashboard' },
     { src: '/cases/tvx-sip-numbers.png', view: 'SIP numbers' },
-    { src: '/cases/tvx-console-users.png', view: 'Console users and roles' },
-    { src: '/cases/tvx-events.png', view: 'Event log' }
+    { src: '/cases/tvx-events.png', view: 'Event log' },
+    { src: '/cases/tvx-audit.png', view: 'Audit trail' }
   ]
 };
 
@@ -71,8 +70,7 @@ const thundervoxIntegrationCase: ProductCase = {
   hero: '/cases/tvx-integration.png',
   shots: [
     { src: '/cases/tvx-integration.png', view: 'Service API and endpoints' },
-    { src: '/cases/tvx-wake-push.png', view: 'Wake push contract' },
-    { src: '/cases/tvx-about.png', view: 'About and licence' }
+    { src: '/cases/tvx-wake-push.png', view: 'Wake push contract' }
   ]
 };
 
@@ -88,9 +86,9 @@ const pathfinderCase: ProductCase = {
   hero: '/cases/pf-qr-card.png',
   shots: [
     { src: '/cases/pf-qr-card.png', view: 'QR code card' },
-    { src: '/cases/pf-qr-codes.png', view: 'QR codes' },
     { src: '/cases/pf-stats.png', view: 'Scan statistics' },
-    { src: '/cases/pf-stats-breakdown.png', view: 'Codes and scan hours' },
+    { src: '/cases/pf-stats-breakdown.png', view: 'Devices, destinations and codes' },
+    { src: '/cases/pf-qr-codes.png', view: 'QR codes' },
     { src: '/cases/pf-about.png', view: 'About and licence' }
   ]
 };
