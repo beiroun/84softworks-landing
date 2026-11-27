@@ -18,7 +18,7 @@
  * Bumped with every new set of shots. The files keep their names, and the browser and Cloudflare keep a cached
  * image for hours, so without a new address a retaken shot would not show up until that expires.
  */
-const SHOTS_VERSION = '2026-11-25';
+const SHOTS_VERSION = '2026-11-27';
 const shot = (name: string) => `/cases/${name}.png?v=${SHOTS_VERSION}`;
 
 export interface CaseShot {
@@ -44,6 +44,7 @@ const senseflowCase: ProductCase = {
     { src: shot('sf-ai-report'), view: 'AI weekly report' },
     { src: shot('sf-chat-card'), view: 'Chat card' },
     { src: shot('sf-chat-analysis'), view: 'Chat analysis' },
+    { src: shot('sf-chat-bot'), view: 'Chat bot tasks' },
     { src: shot('sf-summary'), view: 'Call processing' },
     { src: shot('sf-queues'), view: 'Task queues' }
   ]
